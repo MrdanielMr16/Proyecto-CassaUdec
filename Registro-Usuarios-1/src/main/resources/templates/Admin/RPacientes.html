@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cassa Udec</title>
+
+<!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+	crossorigin="anonymous"></script>
+
+<!-- Los iconos tipo Solid de Fontawesome-->
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+<script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+<link
+	href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css"
+	rel="stylesheet">
+
+<!-- Nuestro css-->
+<link rel="stylesheet" type="text/css"
+	href="static/css/Form-Usuario.css" th:href="@{/css/Form-Usuario.css}">
+
+<!-- Datatable-->
+<link rel="stylesheet"
+	href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+</head>
+
+<body>
+	<div class="contenedor">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<img src="static/img/Logoudec.png" th:src="@{img/Logoudec.png}"
+				width="150" alt="">
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			</div>
+			<div class="collapse navbar-collapse" id="navbarText">
+				<ul class="nav navbar-nav ">
+					<li><a class="navbar-brand text-success">CASSA UDEC</a></li>
+				</ul>
+			</div>
+			<ul class="nav nav-tabs justify-content-end">
+				<li class="nav-item"><a class="nav-link text-success" href="#"
+					th:href="@{/logout}"><span
+						th:text="${#authentication.getPrincipal().getUsername()}" class="text-success"></span>
+						- <span class="text-success">Cerrar Sesion </span><span class="float-right"><i
+							class="fas fa-sign-out-alt"></i></span> </a></li>
+			</ul>
+		</nav>
+	</div>
+	<div class="container-fluid">
+		<div class="row flex-nowrap">
+			<div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light">
+				<div
+					class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+					<ul
+						class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+						id="menu">
+						<li class="nav-item"><a th:href="@{/InicioAdmin}"
+							class="d-block text-success p-3 border-0 "> <i
+								class="icon ion-md-home mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Inicio</span>
+						</a></li>
+						<li><a href="#" th:href="@{/RPacientes}" class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-person mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Registrar Pacientes</span>
+						</a></li>
+						<li><a href="#" th:href="@{/ListarPacientes}" class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-list mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Lista de Pacientes</span>
+						</a></li>
+						<li><a href="#" th:href="@{/Valoracion}" class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-medkit mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Valoraciones</span>
+						</a></li>
+						<li><a href="#" th:href="@{/Admin/Cartillas}" class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-bookmarks"></i> <span
+								class="ms-1 d-none d-sm-inline">Crear Cartillas</span>
+						</a></li>
+						<li><a href="#" class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-copy mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Reportes</span>
+						</a></li>
+						<li><a href="#" class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-chatboxes mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Chat</span>
+						</a></li>
+						<li><a href="#" th:href="@{/Admin/Eventos}" class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-calendar mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Eventos</span>
+						</a></li>
+						<li><a href="#"  class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-paper"></i> <span
+								class="ms-1 d-none d-sm-inline">Foro</span>
+						</a></li>
+						<li><a href="#"  class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-play"></i> <span
+								class="ms-1 d-none d-sm-inline">Multimedia</span>
+						</a></li>
+						<li class="nav-item"><a href="#" th:href="@{/FormUsuario}"
+							class="d-block text-success p-3 border-0 "><i class="icon ion-md-contacts"></i> <span
+								class="ms-1 d-none d-sm-inline">Lista de usuarios</span>
+						</a></li>
+					</ul>
+				</div>
+			</div>
+			<form th:action="@{/guardar}" th:object=${paciente} method="post"
+				class="col-sm-8 row mx-auto ">
+				<h1 class="text-success text-center">Registro de Pacientes</h1>
+				<div class="col-md-6">
+					<input type="hidden" th:field="*{id}"> <label for="Cedula"
+						class="col-form-label">Cedula:</label> <input type="text"
+						class="form-control" id="Cedula" placeholder="Cedula"
+						th:field="*{cedula}">
+				</div>
+				<div class="col-md-6">
+					<label for="Nombre" class="col-form-label">Nombre(s):</label> <input
+						type="text" class="form-control" id="Nombre"
+						placeholder="Nombre(s)" th:field="*{nombre}">
+				</div>
+				<div class="col-md-6">
+					<label for="Apellido" class="col-form-label">Apellido(s):</label> <input
+						type="text" class="form-control" id="Apellido"
+						placeholder="Apellido(s)" th:field="*{apellidos}">
+				</div>
+				<div class="col-md-6">
+					<label for="Direccion" class="col-form-label">Direccion</label> <input
+						type="text" class="form-control" id="Direccion"
+						placeholder="Direccion" th:field="*{direccion}">
+				</div>
+				<div class="col-md-6">
+					<label for="Fechan" class="col-form-label">Fecha de
+						nacimiento</label> <input type="date" class="form-control" id="Fechan"
+						placeholder="Fecha de nacimiento" th:field="*{fecha_nacimiento}">
+				</div>
+				<div class="col-md-2">
+					<label for="Edad" class="col-form-label">Edad:</label> <input
+						type="number" class="form-control" id="Edad" placeholder="Edad"
+						th:field="*{edad}">
+				</div>
+				<div class="col-md-4">
+					<label for="Cuidador" id="Cuidador" class="col-form-label">Requiere
+						cuidador:</label><input type="text" list="items" id="Cuidador"
+						class="form-control" aria-label="Default select example"
+						th:field="*{requiere_cuidador}" />
+					<datalist id="items">
+						<option value="Si">Si</option>
+						<option value="No">No</option>
+					</datalist>
+				</div>
+				<div class="col-md-6">
+					<label for="Relacion_paciente" class="col-form-label">Relacion
+						con el paciente:</label> <input type="text" class="form-control"
+						id="Relacion_paciente" placeholder="Relacion con el paciente"
+						th:field="*{relacion_paciente}">
+				</div>
+				<div class="col-md-6">
+					<label for="Relacion_paciente" class="col-form-label">Nombre
+						del Cuidador o Representante: </label> <input type="text"
+						class="form-control" id="Relacion_paciente"
+						placeholder="Nombre del cuidador" th:field="*{nombre_Cuidador}">
+				</div>
+				<div class="col-md-6">
+					<label for="Telefono" class="col-form-label">Telefono:</label> <input
+						type="text" class="form-control" id="Telefono"
+						placeholder="Telefono" th:field="*{telefono}">
+				</div>
+
+				<div class="col-md-6">
+					<label for="Pais" class="col-form-label">Pais:</label> <input
+						type="text" class="form-control" id="Pais" placeholder="Pais"
+						th:field="*{pais}">
+				</div>
+
+				<button type="button"
+					class="btn collapsed border-success gap-3"
+					data-bs-toggle="collapse"
+					data-bs-target="#getting-started-collapse" aria-expanded="false"
+					aria-current="true">Estado de salud</button>
+				<div class="collapse" id="getting-started-collapse">
+					<div class="row">
+						<div class="col-md-6">
+							<label class="col-form-label">Hace cuanto esta enfermo: </label>
+							<input class="form-control" type="text" list="listamodelos"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{tiempoEnfermo}">
+							<datalist id="listamodelos">
+								<option value="De 0 a 6 meses">
+								<option value="De 7 meses a 2 años">
+								<option value="Mas de 2 años">
+							</datalist>
+						</div>
+						<div class="col-md-6">
+							<label class="col-form-label">Que cambio desde que
+								aparecio la enfermedad:</label> <input class="form-control" type="text"
+								list="Aparecioenfermedad" aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{cambioEnfermedad}">
+							<datalist id="Aparecioenfermedad">
+								<option value="Actividad fisica">
+								<option value="Independencia">
+								<option value="Relaciones socioales">
+								<option value="Relaciones familiares">
+								<option value="Laboral">
+							</datalist>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<label class="col-form-label"> Conocimiento de las
+							complicaciones en relación a su estado de salud:</label> <input
+							name="busquedamodelos" list="estadodesalud" class="form-control"
+							aria-label="Default select example"
+							placeholder="Digita o elige una opcion"
+							th:field="*{conocimientoEstadoSalud}">
+						<datalist id="estadodesalud">
+							<option value="Lesiones de la piel">
+							<option value="Lesiones en los pies">
+							<option value="Afeccion de riñon">
+							<option value="Disminucion agudeza visual">
+							<option value="Afeccion cardiaca">
+							<option value="Amputacion">
+							<option value="ECV">
+							<option value="No sabe">
+						</datalist>
+					</div>
+				</div>
+				<button type="button"
+					class="btn collapsed border-success gap-3"
+					data-bs-toggle="collapse" data-bs-target="#customize-collapse"
+					aria-expanded="false">Orientacion sociocultural</button>
+				<div class="collapse" id="customize-collapse">
+					<div class="row">
+						<div class="col-md-6">
+							<label class="col-form-label">Nivel de educacion: </label> <input
+								name="busquedamodelos" list="educacion" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{nivelEducacion}">
+							<datalist id="educacion">
+								<option value="Primaria incompleta">
+								<option value="Primaria completa">
+								<option value="Bachillerato incompleto">
+								<option value="Bachillerato completo">
+								<option value="Tecnico">
+								<option value="Universidad incompleta">
+								<option value="Universidad completa">
+								<option value="Posgrado">
+							</datalist>
+						</div>
+						<div class="col-md-6">
+							<label class="col-form-label">Medidas alternativas para
+								el manejo de salud: </label> <input name="busquedamodelos"
+								list="Manejosalud" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{medidasAlternativas}">
+							<datalist id="Manejosalud">
+								<option value="Medidas caseras">
+								<option value="Tratamiento homeopatico">
+								<option value="Medicina bioenergica">
+								<option value="Curanderos">
+							</datalist>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<label class="col-form-label">Religion:</label> <input
+							name="busquedamodelos" list="reli" class="form-control"
+							aria-label="Default select example"
+							placeholder="Digita o elige una opcion" th:field="*{religion}">
+						<datalist id="reli">
+							<option value="Catolico">
+							<option value="Evangelico">
+							<option value="No tiene">
+						</datalist>
+					</div>
+				</div>
+				<button type="button"
+					class="btn collapsed border-success gap-3"
+					data-bs-toggle="collapse" data-bs-target="#ayout"
+					aria-expanded="false">Factores del sistema familiar</button>
+				<div class="collapse" id="ayout">
+					<div class="row">
+						<div class="col-md-6">
+							<label>Con quien vive:</label> <input name="busquedamodelos"
+								list="conquienvive" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{conQuienVive}">
+							<datalist id="conquienvive">
+								<option value="Esposo">
+								<option value="Esposa">
+								<option value="Hijo">
+								<option value="Hija">
+							</datalist>
+						</div>
+						<div class="col-md-6">
+							<label>Relaciones familiares:</label> <input
+								name="busquedamodelos" list="relacionfamilia"
+								class="form-control" aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{relacionesFamiliares}">
+							<datalist id="relacionfamilia">
+								<option value="Buena">
+								<option value="Regular">
+								<option value="Mala">
+							</datalist>
+						</div>
+					</div>
+					
+						<div class="col-md-6">
+							<label>Tipo de familia:</label> <input name="busquedamodelos"
+								list="tipofamilia" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{tipoFamilia}">
+							<datalist id="tipofamilia">
+								<option value="Completa">
+								<option value="Incompleta">
+								<option value="Extensa">
+							</datalist>
+						</div>
+					
+				</div>
+				<button type="button"
+					class="btn collapsed border-success gap-3"
+					data-bs-toggle="collapse" data-bs-target="#content-collapse"
+					aria-expanded="false">Patron de vida</button>
+				<div class="collapse" id="content-collapse">
+					<div class="row">
+						<div class="col-md-6">
+							<label>Ocupacion actual:</label> <input name="busquedamodelos"
+								list="ocupacionactual" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{ocupacionActual}">
+							<datalist id="ocupacionactual">
+								<option value="Hogar">
+								<option value="Empleo">
+								<option value="Trabajador independiente">
+								<option value="Ninguna">
+							</datalist>
+						</div>
+						<div class="col-md-6">
+							<label>Ocupacion anterior:</label> <input name="busquedamodelos"
+								list="ocupacionanterior" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{ocupacionAnterior}">
+							<datalist id="ocupacionanterior">
+								<option value="Hogar">
+								<option value="Empleo">
+								<option value="Trabajador independiente">
+								<option value="Ninguna">
+							</datalist>
+						</div>
+					</div>
+					
+						<div class="col-md-6">
+							<label>Actividades que realiza diariamente:</label> <input
+								name="busquedamodelos" list="actividaddiaria"
+								class="form-control" aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{actividadesDiarias}">
+							<datalist id="actividaddiaria">
+								<option value="AVD basica">
+								<option value="Actividad fisica">
+								<option value="Actvidad mental">
+								<option value="Actvidad social">
+								<option value="Actvidad laboral">
+								<option value="Actvidad de tiempo libre u ocio">
+							</datalist>
+						</div>
+					
+				</div>
+				<button type="button"
+					class="btn collapsed border-success gap-3"
+					data-bs-toggle="collapse" data-bs-target="#forms-collapse"
+					aria-expanded="false">Factores ambientales</button>
+				<div class="collapse" id="forms-collapse">
+					<div class="row">
+						<div class="col-md-6">
+							<label>Comuna o corregimiento:</label> <input
+								name="busquedamodelos" list="comuna" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{comunaCorregimiento}">
+							<datalist id="comuna">
+								<option value="Comuna 1 Centro San Miguel">
+								<option value="Comuna 1 Centro Centro">
+								<option value="Comuna 1 Centro Granada">
+								<option value="Comuna 1 Centro Sucre">
+								<option value="Comuna 1 Centro Murillo Toro">
+								<option value="Comuna 1 Centro Santander">
+								<option value="Comuna 1 Centro Bogota">
+								<option value="Comuna 1 Centro Los Almendros">
+								<option value="Comuna 1 Centro Blanco">
+								<option value="Comuna 1 Centro La Magdalena">
+								<option value="Comuna 1 Centro Bavaria">
+								<option value="Comuna 1 Centro San Antonio">
+								<option value="Comuna 1 Centro Miraflores">
+								<option value="Comuna 2 Sur Puerto Montero ">
+								<option value="Comuna 2 Sur Puerto Cabrera">
+								<option value="Comuna 2 Sur 10 De Mayo">
+								<option value="Comuna 2 Sur 20 De Julio">
+								<option value="Comuna 2 Sur Puerto Mongui">
+								<option value="Comuna 2 Sur El Divino Niño">
+								<option value="Comuna 2 Sur Bocas De Bogota">
+								<option value="Comuna 2 Sur Urbanizacion Tocarema">
+								<option value="Comuna 2 Sur Alto De La Cruz">
+								<option value="Comuna 2 Sur Alto Del Rosario">
+								<option value="Comuna 2 Sur Las Rosas">
+								<option value="Comuna 2 Sur El Porvenir">
+								<option value="Comuna 2 Sur Santa Monica">
+								<option value="Comuna 2 Sur Parques Bocas Del Bogota">
+								<option value="Comuna 2 Sur Portal De Santa Monica">
+								<option value="Comuna 2 Sur Acacias">								
+								<option value="Comuna 3 Occidente Arrayanes">
+								<option value="Comuna 3 Occidente Esperanza">
+								<option value="Comuna 3 Occidente Quinto Patio">
+								<option value="Comuna 3 Occidente Buenos Aires">
+								<option value="Comuna 3 Occidente Parques De Andalucia">
+								<option value="Comuna 3 Occidente La Colina">
+								<option value="Comuna 3 Occidente La Colina Campestre">
+								<option value="Comuna 3 Occidente La Colina Real">
+								<option value="Comuna 3 Occidente San Luis">
+								<option value="Comuna 3 Occidente Santa Helena">
+								<option value="Comuna 3 Occidente Centenario">
+								<option value="Comuna 3 Occidente Cambulos">
+								<option value="Comuna 3 Occidente Las Mercedes">
+								<option value="Comuna 3 Occidente Gólgota">
+								<option value="Comuna 3 Occidente Meneses">
+								<option value="Comuna 3 Occidente Estacion">
+								<option value="Comuna 3 Occidente Jorge Eliecer Gaitán (j.e.g.)">
+								<option value="Comuna 3 Occidente El paraiso">
+								<option value="Comuna 3 Occidente Quintas Saavedra Galindo">
+								<option value="Comuna 3 Occidente Vivisol i y ii">
+								<option value="Comuna 3 Occidente Santa Paula i">
+								<option value="Comuna 3 Occidente Santa Isabel">
+								<option value="Comuna 3 Occidente La Maravilla">
+								<option value="Comuna 3 Occidente Santa Paula Resort ii">
+								<option value="Comuna 3 Occidente Los Mangos">
+								<option value="Comuna 3 Occidente El Nogal">
+								<option value="Comuna 3 Occidente Guadalquivir">
+								<option value="Comuna 3 Occidente Madeira">
+								<option value="Comuna 3 Occidente Villa Alexander">
+								<option value="Comuna 3 Occidente Villa Cecilia">
+								<option value="Comuna 3 Occidente La Arboleda">
+								<option value="Comuna 3 Occidente Villampiss">
+								<option value="Comuna 3 Occidente El Portal De Los Almendros">
+								<option value="Comuna 3 Occidente El Portal De Los Cauchos">
+								<option value="Comuna 3 Occidente Aso Comun">
+								<option value="Comuna 4 Norte Tejadas Del Norte">
+								<option value="Comuna 4 Norte Rosa Blanca">
+								<option value="Comuna 4 Norte Los Rosales">
+								<option value="Comuna 4 Norte Santa Rita">
+								<option value="Comuna 4 Norte Alicante">
+								<option value="Comuna 4 Norte Los Naranjos">
+								<option value="Comuna 4 Norte Altos De Peñon">
+								<option value="Comuna 4 Norte Parque Central">
+								<option value="Comuna 4 Norte Condominio Montana">
+								<option value="Comuna 4 Norte Altos Del Chicala">
+								<option value="Comuna 4 Norte Mi futuro">
+								<option value="Comuna 4 Norte Esmeralda iii">
+								<option value="Comuna 4 Norte Bosques Del Norte">
+								<option value="Comuna 4 Norte San Fernando">
+								<option value="Comuna 4 Norte Juan Pablo ii">
+								<option value="Comuna 4 Norte Diamante">
+								<option value="Comuna 4 Norte Diamante Popular">
+								<option value="Comuna 4 Norte Esmeralda">
+								<option value="Comuna 4 Norte Zarzuela">
+								<option value="Comuna 4 Norte La Tatiana">
+								<option value="Comuna 4 Norte La Cuarenta">
+								<option value="Comuna 4 Norte El Refugio">
+								<option value="Comuna 4 Norte Balcones ii">
+								<option value="Comuna 4 Norte Palmeras Del Norte">
+								<option value="Comuna 4 Norte Alcatraz">
+								<option value="Comuna 4 Norte Portobelo i y ii">
+								<option value="Comuna 4 Norte Bello Horizonte">
+								<option value="Comuna 4 Norte Esperanza Norte">
+								<option value="Comuna 4 Norte Madrigal">
+								<option value="Comuna 4 Norte Ciudad Montes">
+								<option value="Comuna 4 Norte Brisas De Girardot">
+								<option value="Comuna 4 Norte El Eden">
+								<option value="Comuna 4 Norte Volver A Vivir i y ii">
+								<option value="Comuna 4 Norte Solaris">
+								<option value="Comuna 4 Norte La Ermita">
+								<option value="Comuna 5 Oriente Salsipuedes">
+								<option value="Comuna 5 Oriente Santa Fe">
+								<option value="Comuna 5 Oriente Brisas Del Bogota">
+								<option value="Comuna 5 Oriente Obrero">
+								<option value="Comuna 5 Oriente San Jorge">
+								<option value="Comuna 5 Oriente Corozo">
+								<option value="Comuna 5 Oriente La Magdala">
+								<option value="Comuna 5 Oriente Villa Paola">
+								<option value="Comuna 5 Oriente Villa Yaneth">
+								<option value="Comuna 5 Oriente Primero De Enero">
+								<option value="Comuna 5 Oriente Magdalena iii">
+								<option value="Comuna 5 Oriente La Campiña">
+								<option value="Comuna 5 Oriente La Victoria">
+								<option value="Comuna 5 Oriente Los Guaduales">
+								<option value="Comuna 5 Oriente El Triunfo">
+								<option value="Comuna 5 Oriente Kennedy">
+								<option value="Comuna 5 Oriente Villa Kennedy">
+								<option value="Comuna 5 Oriente La Carolina">
+								<option value="Comuna 5 Oriente Santa Lucia">
+								<option value="Comuna 5 Oriente Girasol">
+								<option value="Comuna 5 Oriente El Cedrito">
+								<option value="Comuna 5 Oriente El Cedro">
+								<option value="Comuna 5 Oriente Villa Olarte">
+								<option value="Comuna 5 Oriente Los Bunganbiles">
+								<option value="Comuna 5 Oriente Santa Maria Del Peñon">
+								<option value="Comuna 5 Oriente Portachuelo">
+								<option value="Comuna 5 Oriente El Peñon">
+								<option value="Comuna 5 Oriente Lagos Del Peñon">
+								<option value="Comuna 5 Oriente La Trinitaria">
+								<option value="Corregimiento 1 Barzalosa Berlin">
+								<option value="Corregimiento 1 Barzalosa Guanibal Cerro">
+								<option value="Corregimiento 1 Barzalosa Piamonte">
+								<option value="Corregimiento 1 Barzalosa Presidente">
+								<option value="Corregimiento 1 Barzalosa Guanibal Plan">
+								<option value="Corregimiento 1 Barzalosa Barzalosa">
+								<option value="Corregimiento 2 San Lorenzo Agua Blanca">
+								<option value="Corregimiento 2 San Lorenzo San Lorenzo">
+								<option value="Corregimiento 2 San Lorenzo Potrerillo">
+								<option value="Corregimiento 2 San Lorenzo Acapulco">
+								<option value="Corregimiento 2 San Lorenzo Santa Helena">
+							</datalist>
+						</div>
+						<div class="col-md-6">
+							<label>Comuna tranquila, respetuosa y solidaria:</label> <input
+								name="busquedamodelos" list="comunatranquila"
+								class="form-control" aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{relacionComuna}">
+							<datalist id="comunatranquila">
+								<option value="Si">
+								<option value="No">
+							</datalist>
+						</div>
+						<div class="col-md-6">
+							<label>Contaminacion ambiental:</label> <input
+								name="busquedamodelos" list="contaminacionambi"
+								class="form-control" aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{contaminacionAmbiental}">
+
+							<datalist id="contaminacionambi">
+								<option value="Si">
+								<option value="No">
+							</datalist>
+						</div>
+						<div class="col-md-6">
+							<label>Vias de acceso:</label><input name="busquedamodelos"
+								list="viasacceso" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion" th:field="*{viasAcceso}">
+
+							<datalist id="viasacceso">
+								<option value="Si">
+								<option value="No">
+							</datalist>
+						</div>
+						<div class="col-md-6">
+							<label>Servicio de transporte:</label> <input
+								name="busquedamodelos" list="transporte" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{servicioTransporte}">
+							<datalist id="transporte">
+								<option value="Si">
+								<option value="No">
+							</datalist>
+						</div>
+						<div class="col-md-6">
+							<label>Zonas verdes:</label> <input name="busquedamodelos"
+								list="zonaverde" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{zonasVerdes}">
+							<datalist id="zonaverde">
+								<option value="Si">
+								<option value="No">
+							</datalist>
+						</div>
+						<div class="col-md-6">
+							<label>Zonas publicas:</label> <input name="busquedamodelos"
+								list="zonapublica" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{zonasPublicas}">
+							<datalist id="zonapublica">
+								<option value="Si">
+								<option value="No">
+							</datalist>
+						</div>
+						<div class="col-md-6">
+							<label> Barreras arquitectonicas:</label> <input
+								name="busquedamodelos" list="barrerasarqui" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{barrerasArquitectonicas}">
+							<datalist id="barrerasarqui">
+								<option value="Si">
+								<option value="No">
+							</datalist>
+						</div>
+					</div>
+				</div>
+				<button type="button"
+					class="btn collapsed border-success gap-3"
+					data-bs-toggle="collapse" data-bs-target="#components-collapse"
+					aria-expanded="false">Recursos disponibles y adecuados</button>
+				<div class="collapse" id="components-collapse">
+					<div class="row">
+						<div class="col-md-6">
+							<label>Eps:</label> <input name="busquedamodelos" list="Eps"
+								class="form-control" aria-label="Default select example"
+								placeholder="Digita o elige una opcion" th:field="*{eps}">
+						</div>
+						<div class="col-md-6">
+							<label>Estrato socioeconomico: </label> <input
+								name="busquedamodelos" list="estra" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion" th:field="*{estrato}">
+							<datalist id="estra">
+								<option value="1">
+								<option value="2">
+								<option value="3">
+								<option value="4">
+								<option value="5">
+								<option value="6">
+							</datalist>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<label>Ingresos economicos mensuales:</label> <input
+							name="busquedamodelos" list="salariomen" class="form-control"
+							aria-label="Default select example"
+							placeholder="Digita o elige una opcion"
+							th:field="*{ingresosEconomicos}">
+						<datalist id="salariomen">
+							<option value="Menos de 1 SMLV">
+							<option value="1 SMLV">
+							<option value="Mas 2 SMLV">
+							<option value="No recibe">
+							<option value="Pensionado">
+							<option value="Ayuda de familiares">
+							<option value="Subsidio de gobierno">
+						</datalist>
+					</div>
+				</div>
+				<button type="button"
+					class="btn collapsed border-success gap-3"
+					data-bs-toggle="collapse" data-bs-target="#helpers-collapse"
+					aria-expanded="false">Requisitos de desarrollo</button>
+				<div class="collapse" id="helpers-collapse">
+					<div class="row">
+						<div class="col-md-6">
+							<label>Los que mitigan o superan efectos negativos reales
+								o potenciales:</label> <input name="busquedamodelos"
+								list="efectosnegativos" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{efectosNegativos}">
+							<datalist id="efectosnegativos">
+								<option value="Privación educacional">
+								<option value="Problemas de adaptación socia">
+								<option value="Perdida de familiares o amigos">
+								<option value="Perdida del trabajo">
+								<option value="Cambio súbito en las condiciones de vida">
+								<option value="Cambio de posición social o económica">
+								<option value="Incapacidad, mala salud, enfermedad Terminal">
+								<option value="Muerte, duelo">
+								<option value="Peligros ambientales">
+								<option value="Acciones que comprometen el desarrollo">
+							</datalist>
+						</div>
+						<div class="col-md-6">
+							<label>Los que apoyan los requisitos vitales, promueven
+								el desarrollo y la maduración y previenen efectos negativos:</label> <input
+								name="busquedamodelos" list="promueveefectos"
+								class="form-control" aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{requisitosVitales}">
+							<datalist id="promueveefectos">
+								<option value="Vida intrauterina">
+								<option value="Vida neonatal, parto a termino o prematuro">
+								<option value="Lactancia">
+								<option value="Infanciao">
+								<option value="Adolescencia">
+								<option value="Adulto joven">
+								<option value="Adulto">
+								<option value="Embarazo">
+							</datalist>
+						</div>
+					</div>
+				</div>
+				<button type="button"
+					class="btn collapsed border-success gap-3"
+					data-bs-toggle="collapse" data-bs-target="#utilities-collapse"
+					aria-expanded="false">Requisitos de autocuidado en la
+					desviacion de la salud</button>
+				<div class="collapse" id="utilities-collapse">
+					<div class="row">
+						<div class="col-md-6">
+							<label>Asiste a controles médicos y/o enfermería:</label> <input
+								name="busquedamodelos" list="asistenteenfermeria"
+								class="form-control" aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{controlesMedicos}">
+						</div>
+						<div class="col-md-6">
+							<label>Conoce los efectos que produce la enfermedad:</label> <input
+								name="busquedamodelos" list="efectosenfermedad"
+								class="form-control" aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{efectosEnfermedad}">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<label>Tratamiento farmacológico: </label> <input
+								name="busquedamodelos" list="Tratamientofarma"
+								class="form-control" aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{tratamientoFarmacologico}">
+							<datalist id="Tratamientofarma">
+								<option value="IECA">
+								<option value="Bloqueadores de canales de Ca">
+								<option value="ATA II">
+								<option value="Beta bloqueadores">
+								<option value="Biguanidas">
+								<option value="Hipoglicemiantes">
+								<option value="Insulinas">
+								<option value="Diureticos">
+								<option value="Analgésicos y antiinflamatores">
+								<option value="Suplementos vitamínicos">
+								<option value="Reductor de colesterol y trigliceridos">
+								<option value="Laxante">
+								<option value="Hormona toroidea">
+								<option value="Ninguno">
+							</datalist>
+						</div>
+						<div class="col-md-6">
+							<label> De quien recibió la información:</label> <input
+								name="busquedamodelos" list="información" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{recibioInformacion}">
+							<datalist id="información">
+								<option value="Medico">
+								<option value="Enfermero(a)">
+								<option value="Estudiante">
+							</datalist>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<label>Conoce los efectos indeseados que pueden causar
+								los medicamentos:</label> <input name="busquedamodelos"
+								list="medicamentos" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{efectosIndeseados}">
+						</div>
+						<div class="col-md-6">
+							<label>La enfermedad y sus consecuencias han cambiado su
+								estilo de vida:</label> <input name="busquedamodelos" list="estilovida"
+								class="form-control" aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{enfermedadEstiloVida}">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<label>El autoconcepto ha cambiado como consecuencia de
+								su enfermedad:</label> <input name="busquedamodelos"
+								list="consecuenciaenfermedad" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{autoconcepto}">
+							<datalist id="zonapublica">
+								<option value="Si">
+								<option value="No">
+							</datalist>
+						</div>
+						<div class="col-md-6">
+							<label> Recibe apoyo para la asistencia en las
+								actividades de la vida diaria:</label> <input name="busquedamodelos"
+								list="actividaddiaria" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{recibeApoyo}">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<label>Ha aprendido a vivir con su enfermedad:</label> <input
+								name="busquedamodelos" list="vivirenfermedad"
+								class="form-control" aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{aprendidoVivir}">
+						</div>
+					</div>
+				</div>	
+				<div class="col-sm-3 row mx-auto ">
+					<input type="submit" class="btn btn-outline-success"
+						value="Guardar">
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

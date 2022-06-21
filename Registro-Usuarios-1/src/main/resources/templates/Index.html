@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+    <title>Cassa Udec</title>
+
+    <!--JQUERY-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    <!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    
+    <!-- Los iconos tipo Solid de Fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+    <!-- Nuestro css-->
+    <link rel="stylesheet" type="text/css" href="static/css/index.css" th:href="@{/css/index.css}">
+
+</head>
+<body>
+    <div class="modal-dialog text-center ">
+        <div class="col-auto main-section ">
+            <div class="modal-content ">
+                <form class="col-auto" th:action="@{/login}" method="post">
+                	<h1 class="text-center text-white">Inicio de Sesion</h1>
+                	<br>
+                    <div class="form-group" id="user-group">
+                        <input type="text" class="form-control" placeholder="Nombre de usuario" name="username"/>
+                    </div>
+                    <br>
+                    <div class="form-group" id="contrasena-group">
+                        <input type="password" class="form-control" placeholder="Contraseña" name="password"/>
+                    </div>
+                    <br>
+                    <button type="submit" class="form-control btn btn-outline-success fw-bold"><i class="fas fa-sign-in-alt"></i>	Iniciar Sesion	</button>
+                </form>
+                <br>
+                <div class="col-20 forgot">
+                        <span class="text-white">Si eres nuevo <a class="text-success" th:href="@{/signup}">registrate aqui. </a></span>
+                </div>
+                <div th:if="${param.error}" class="alert alert-danger" role="alert">
+		           Contrasena o Usuario Invalido.
+		        </div>
+		        <div th:if="${param.logout}" class="alert alert-success" role="alert">
+		            Cerraste sesion correctamente.
+		        </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

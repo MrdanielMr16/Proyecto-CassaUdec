@@ -1,0 +1,2176 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cassa Udec</title>
+
+<!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+	crossorigin="anonymous"></script>
+
+<!-- Los iconos tipo Solid de Fontawesome-->
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+<script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+<link
+	href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css"
+	rel="stylesheet">
+
+<!-- Nuestro css-->
+<link rel="stylesheet" type="text/css"
+	href="static/css/Form-Usuario.css" th:href="@{/css/Form-Usuario.css}">
+
+<!-- Datatable-->
+<link rel="stylesheet"
+	href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+</head>
+
+<body>
+	<div class="contenedor ">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<img src="static/img/Logoudec.png" th:src="@{img/Logoudec.png}"
+				width="150" alt="">
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			</div>
+			<div class="collapse navbar-collapse" id="navbarText">
+				<ul class="nav navbar-nav ">
+					<li><a class="navbar-brand text-success">CASSA UDEC</a></li>
+				</ul>
+			</div>
+			<ul class="nav nav-tabs justify-content-end">
+				<li class="nav-item"><a class="nav-link text-success" href="#"
+					th:href="@{/logout}"><span
+						th:text="${#authentication.getPrincipal().getUsername()}" class="text-success"></span>
+						- <span class="text-success">Cerrar Sesion </span><span class="float-right"><i
+							class="fas fa-sign-out-alt"></i></span> </a></li>
+			</ul>
+		</nav>
+	</div>
+	<div class="container-fluid">
+		<div class="row flex-nowrap">
+			<div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light">
+				<div
+					class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+					<ul
+						class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+						id="menu">
+						<li class="nav-item"><a th:href="@{/InicioAdmin}"
+							class="d-block text-success p-3 border-0 "> <i
+								class="icon ion-md-home mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Inicio</span>
+						</a></li>
+						<li><a href="#" th:href="@{/RPacientes}" class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-person mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Registrar Pacientes</span>
+						</a></li>
+						<li><a href="#" th:href="@{/ListarPacientes}" class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-list mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Lista de Pacientes</span>
+						</a></li>
+						<li><a href="#" th:href="@{/Valoracion}" class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-medkit mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Valoraciones</span>
+						</a></li>
+						<li><a href="#" th:href="@{/Admin/Cartillas}" class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-bookmarks"></i> <span
+								class="ms-1 d-none d-sm-inline">Crear Cartillas</span>
+						</a></li>
+						<li><a href="#" class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-copy mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Reportes</span>
+						</a></li>
+						<li><a href="#" class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-chatboxes mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Chat</span>
+						</a></li>
+						<li><a href="#" th:href="@{/Admin/Eventos}" class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-calendar mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Eventos</span>
+						</a></li>
+						<li><a href="#"  class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-paper"></i> <span
+								class="ms-1 d-none d-sm-inline">Foro</span>
+						</a></li>
+						<li><a href="#"  class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-play"></i> <span
+								class="ms-1 d-none d-sm-inline">Multimedia</span>
+						</a></li>
+						<li class="nav-item"><a href="#" th:href="@{/FormUsuario}"
+							class="d-block text-success p-3 border-0 "><i class="icon ion-md-contacts"></i> <span
+								class="ms-1 d-none d-sm-inline">Lista de usuarios</span>
+						</a></li>
+					</ul>
+				</div>
+			</div>
+			<form th:action="@{/guardarValoracion}" th:object=${valoraciones}
+				class="col-sm-8 row mx-auto" method="post">
+				
+					<div class="col-md-6 gap-3">
+						<label for="Paciente" class="col-form-label">Digite el
+							Nombre o la Cedula del paciente:</label> <input class="form-control"
+							type="text" list="Paci" aria-label="Default select example"
+							placeholder="Digita o elige una opcion" required
+							th:field="*{Pacientes}">
+						<datalist id="Paci">
+							<th:blocks th:each="Pacientes : ${listaPacientes}">
+								<option
+									th:text="${Pacientes.nombre} + ' ' + ${Pacientes.apellidos} + ' ' + ${Pacientes.cedula}"
+									th:value="${Pacientes.id}">
+							</th:blocks>
+						</datalist>
+					</div>
+
+
+				<button type="button" class="btn collapsed border-success gap-3"
+					data-bs-toggle="collapse"
+					data-bs-target="#getting-started-collapse" aria-expanded="false"
+					aria-current="true">Diagnostico de enfermeria (nanda)</button>
+				<div class="collapse" id="getting-started-collapse">
+					<div class="row">
+						<div class="col-md-12">
+							<div id="Diag">
+							<div class="clonar">
+							<label>Diagnostico:</label> <input name="busquedamodelos"
+								list="Diagnostico" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{diagnosticoNANDA}">
+							</div>
+							</div> 
+							<div id="contenedor"></div>
+								<br>
+                            	<div class="col-md-12 text-center">
+                                	<button type="button" class="btn btn-primary" id="agregar" onclick="addDiagnostico();">Agregar Diagnostico +</button>
+                            	</div>
+							<datalist id="Diagnostico">
+								<option
+									value="[00002] Desequilibrio nutricional: ingesta inferior a las necesidades a las necesidades">
+								<option value="[00004] Riesgo de infección">
+								<option
+									value="[00005] Riesgo de desequilibrio de la temperatura corporal">
+								<option value="[00006] Hipotermia">
+								<option value="[00007] Hipertermia">
+								<option value="[00008] Termorregulación ineficaz">
+								<option value="[00009] Disrreflexia autónoma">
+								<option value="[00010] Riesgo de disrreflexia autónoma">
+								<option value="[00011] Estreñimiento">
+								<option value="[00012] Estreñimiento subjetivo">
+								<option value="[00013] Diarrea">
+								<option value="[00014] Incontinencia fecal">
+								<option value="[00015] Riesgo de estreñimiento">
+								<option value="[00016] Deterioro de la eliminación urinaria">
+								<option value="[00017] Incontinencia urinaria de esfuerzo">
+								<option value="[00018] Incontinencia urinaria refleja">
+								<option value="[00019] Incontinencia urinaria de urgencia">
+								<option value="[00020] Incontinencia urinaria funcional">
+								<option
+									value="[00022] Riesgo de incontinencia urinaria de urgencia">
+								<option value="[00023] Retención urinaria">
+								<option
+									value="[00025] Riesgo de desequilibrio de volumen de líquidos">
+								<option value="[00026] Exceso de volumen de líquidos">
+								<option value="[00027] Déficit de volumen de líquidos">
+								<option value="[00028] Riesgo de déficit de volumen de líquidos">
+								<option value="[00029] Disminución del gasto cardíaco">
+								<option value="[00030] Deterioro del intercambio de gases">
+								<option value="[00031] Limpieza ineficaz de las vías aéreas">
+								<option value="[00032] Patrón respiratorio ineficaz">
+								<option value="[00033] Deterioro de la ventilación espontánea">
+								<option
+									value="[00034] Respuesta ventilatoria disfuncional al destete">
+								<option value="[00035] Riesgo de lesión">
+								<option value="[00036] Riesgo de asfixia">
+								<option value="[00037] Riesgo de intoxicación">
+								<option value="[00038] Riesgo de traumatismo">
+								<option value="[00039] Riesgo de aspiración">
+								<option value="[00040] Riesgo de síndrome de desuso">
+								<option value="[00041] Respuesta alérgica al látex">
+								<option value="[00042] Riesgo de respuesta alérgica al látex">
+								<option value="[00043] Protección ineficaz">
+								<option value="[00044] Deterioro de la integridad tisular">
+								<option value="[00045] Deterioro de la mucosa oral">
+								<option value="[00046] Deterioro de la integridad cutánea">
+								<option
+									value="[00047] Riesgo de deterioro de la integridad cutánea">
+								<option value="[00048] Deterioro de la dentición">
+								<option
+									value="[00049] Disminución de la capacidad adaptativa intracraneal">
+								<option value="[00051] Deterioro de la comunicación verbal">
+								<option value="[00052] Deterioro de la interacción social">
+								<option value="[00053] Aislamiento social">
+								<option value="[00054] Riesgo de soledad">
+								<option value="[00055] Desempeño ineficaz del rol">
+								<option value="[00056] Deterioro parental">
+								<option value="[00057] Riesgo de deterioro parental">
+								<option value="[00058] Riesgo de deterioro de la vinculación">
+								<option value="[00059] Disfunción sexual">
+								<option value="[00060] Interrupción de los procesos familiares">
+								<option value="[00061] Cansancio del rol de cuidador">
+								<option value="[00062] Riesgo de cansancio del rol de cuidador">
+								<option value="[00063] Procesos familiares disfuncionales">
+								<option value="[00064] Conflicto del rol parental">
+								<option value="[00065] Patrón sexual ineficaz">
+								<option value="[00066] Sufrimiento espiritual">
+								<option value="[00067] Riesgo de sufrimiento espiritual">
+								<option
+									value="[00068] Disposición para mejorar el bienestar espiritual">
+								<option value="[00069] Afrontamiento ineficaz">
+								<option value="[00071] Afrontamiento defensivo">
+								<option value="[00072] Negación ineficaz">
+								<option value="[00073] Afrontamiento familiar incapacitante">
+								<option value="[00074] Afrontamiento familiar comprometido">
+								<option
+									value="[00075] Disposición para mejorar el afrontamiento familiar">
+								<option
+									value="[00076] Disposición para mejorar el afrontamiento de la comunidad">
+								<option value="[00077] Afrontamiento ineficaz de la comunidad">
+								<option value="[00078] Gestión ineficaz de la salud">
+								<option value="[00079] Incumplimiento">
+								<option value="[00080] Gestión ineficaz de la salud familiar">
+								<option value="[00083] Conflicto de decisiones">
+								<option value="[00085] Deterioro de la movilidad física">
+								<option
+									value="[00086] Riesgo de disfunción neurovascular periférica">
+								<option value="[00087] Riesgo de lesión postural perioperatoria">
+								<option value="[00088] Deterioro de la ambulación">
+								<option
+									value="[00089] Deterioro de la movilidad en silla de ruedas">
+								<option
+									value="[00090] Deterioro de la habilidad para la traslación">
+								<option value="[00091] Deterioro de la movilidad en la cama">
+								<option value="[00092] Intolerancia a la actividad">
+								<option value="[00093] Fatiga">
+								<option value="[00094] Riesgo de intolerancia a la actividad">
+								<option value="[00095] Insomnio">
+								<option value="[00096] Deprivación de sueño">
+								<option value="[00097] Déficit de actividades recreativas">
+								<option value="[00098] Deterioro del mantenimiento del hogar">
+								<option value="[00099] Mantenimiento ineficaz de la salud">
+								<option value="[00100] Retraso en la recuperación quirúrgica">
+								<option value="[00102] Déficit de autocuidado: alimentación">
+								<option value="[00103] Deterioro de la deglución">
+								<option value="[00104] Lactancia materna ineficaz">
+								<option value="[00105] Interrupción de la lactancia materna">
+								<option
+									value="[00106] Disposición para mejorar la lactancia materna">
+								<option
+									value="[00107] Patrón de alimentación ineficaz del lactante">
+								<option value="[00108] Déficit de autocuidado: baño">
+								<option value="[00109] Déficit de autocuidado: vestido">
+								<option value="[00110] Déficit de autocuidado: uso del inodoro">
+								<option value="[00112] Riesgo de retraso en el desarrollo">
+								<option value="[00113] Riesgo de crecimiento desproporcionado">
+								<option value="[00114] Síndrome de estrés del traslado">
+								<option
+									value="[00115] Riesgo de conducta desorganizada del lactante">
+								<option value="[00116] Conducta desorganizada del lactante">
+								<option
+									value="[00117] Disposición para mejorar la conducta organizada del lactante">
+								<option value="[00118] Trastorno de la imagen corporal">
+								<option value="[00119] Baja autoestima crónica">
+								<option value="[00120] Baja autoestima situacional">
+								<option value="[00121] Trastorno de la identidad personal">
+								<option value="[00123] Desatención unilateral">
+								<option value="[00124] Desesperanza">
+								<option value="[00125] Impotencia">
+								<option value="[00126] Conocimientos deficientes">
+								<option value="[00128] Confusión aguda">
+								<option value="[00129] Confusión crónica">
+								<option value="[00131] Deterioro de la memoria">
+								<option value="[00132] Dolor agudo">
+								<option value="[00133] Dolor crónico">
+								<option value="[00134] Náuseas">
+								<option value="[00135] Duelo complicado">
+								<option value="[00136] Duelo">
+								<option value="[00137] Aflicción crónica">
+								<option value="[00138] Riesgo de violencia dirigida a otros">
+								<option value="[00139] Riesgo de automutilación">
+								<option value="[00140] Riesgo de violencia autodirigida">
+								<option value="[00141] Síndrome postraumático">
+								<option value="[00142] Síndrome del trauma posviolación">
+								<option value="[00145] Riesgo de síndrome postraumático">
+								<option value="[00146] Ansiedad">
+								<option value="[00147] Ansiedad ante la muerte">
+								<option value="[00148] Temor">
+								<option
+									value="[00149] Riesgo de síndrome de estrés del traslado">
+								<option value="[00150] Riesgo de suicidio">
+								<option value="[00151] Automutilación">
+								<option value="[00152] Riesgo de impotencia">
+								<option value="[00153] Riesgo de baja autoestima situacional">
+								<option value="[00154] Vagabundeo">
+								<option value="[00155] Riesgo de caídas">
+								<option
+									value="[00156] Riesgo de síndrome de muerte súbita del lactante">
+								<option value="[00157] Disposición para mejorar la comunicación">
+								<option
+									value="[00158] Disposición para mejorar el afrontamiento">
+								<option
+									value="[00159] Disposición para mejorar los procesos familiares">
+								<option
+									value="[00160] Disposición para mejorar el equilibrio de líquidos">
+								<option
+									value="[00161] Disposición para mejorar los conocimientos">
+								<option
+									value="[00162] Disposición para mejorar la gestión de la salud">
+								<option value="[00163] Disposición para mejorar la nutrición">
+								<option value="[00164] Disposición para mejorar el rol parental">
+								<option value="[00165] Disposición para mejorar el sueño">
+								<option
+									value="[00166] Disposición para mejorar la eliminación urinaria">
+								<option value="[00167] Disposición para mejorar el autoconcepto">
+								<option value="[00168] Estilo de vida sedentario">
+								<option value="[00169] Deterioro de la religiosidad">
+								<option value="[00170] Riesgo de deterioro de la religiosidad">
+								<option value="[00171] Disposición para mejorar la religiosidad">
+								<option value="[00172] Riesgo de duelo complicado">
+								<option value="[00173] Riesgo de confusión aguda">
+								<option
+									value="[00174] Riesgo de compromiso de la dignidad humana">
+								<option value="[00175] Sufrimiento moral">
+								<option value="[00176] Incontinencia urinaria por rebosamiento">
+								<option value="[00177] Estrés por sobrecarga">
+								<option
+									value="[00178] Riesgo de deterioro de la función hepática">
+								<option value="[00179] Riesgo de nivel de glucemia inestable">
+								<option value="[00180] Riesgo de contaminación">
+								<option value="[00181] Contaminación">
+								<option value="[00182] Disposición para mejorar el autocuidado">
+								<option value="[00183] Disposición para mejorar el confort">
+								<option
+									value="[00184] Disposición para mejorar la toma de decisiones">
+								<option value="[00185] Disposición para mejorar la esperanza">
+								<option value="[00187] Disposición para mejorar el poder">
+								<option
+									value="[00188] Tendencia a adoptar conductas de riesgo para la salud">
+								<option value="[00193] Descuido personal">
+								<option value="[00194] Ictericia neonatal">
+								<option value="[00195] Riesgo de desequilibrio electrolítico">
+								<option value="[00196] Motilidad gastrointestinal disfuncional">
+								<option
+									value="[00197] Riesgo de motilidad gastrointestinal disfuncional">
+								<option value="[00198] Patrón del sueño alterado">
+								<option
+									value="[00199] Planificación ineficaz de las actividades">
+								<option
+									value="[00200] Riesgo de disminución de la perfusión tisular cardíaca">
+								<option
+									value="[00201] Riesgo de perfusión tisular cerebral ineficaz">
+								<option
+									value="[00202] Riesgo de perfusión gastrointestinal ineficaz">
+								<option value="[00203] Riesgo de perfusión renal ineficaz">
+								<option value="[00204] Perfusión tisular periférica ineficaz">
+								<option value="[00205] Riesgo de shock">
+								<option value="[00206] Riesgo de sangrado">
+								<option value="[00207] Disposición para mejorar la relación">
+								<option
+									value="[00208] Disposición para mejorar el proceso de maternidad">
+								<option
+									value="[00209] Riesgo de alteración de la díada materno/fetal">
+								<option value="[00210] Deterioro de la resiliencia">
+								<option value="[00211] Riesgo de deterioro de la resiliencia">
+								<option value="[00212] Disposición para mejorar la resiliencia">
+								<option value="[00213] Riesgo de traumatismo vascular">
+								<option value="[00214] Disconfort">
+								<option value="[00215] Salud deficiente de la comunidad">
+								<option value="[00216] Leche materna insuficiente">
+								<option value="[00217] Riesgo de respuesta alérgica">
+								<option
+									value="[00218] Riesgo de reacción adversa a medios de contraste yodados">
+								<option value="[00219] Riesgo de ojo seco">
+								<option value="[00220] Riesgo de lesión térmica">
+								<option value="[00221] Proceso de maternidad ineficaz">
+								<option value="[00222] Control de impulsos ineficaz">
+								<option value="[00223] Relación ineficaz">
+								<option value="[00224] Riesgo de baja autoestima crónica">
+								<option
+									value="[00225] Riesgo de trastorno de la identidad personal">
+								<option
+									value="[00226] Riesgo de planificación ineficaz de las actividades">
+								<option value="[00227] Riesgo de proceso de maternidad ineficaz">
+								<option
+									value="[00228] Riesgo de perfusión tisular periférica ineficaz">
+								<option value="[00229] Riesgo de relación ineficaz">
+								<option value="[00230] Riesgo de ictericia neonatal">
+								<option
+									value="[00231] Riesgo de síndrome de fragilidad del anciano">
+								<option value="[00232] Obesidad">
+								<option value="[00233] Sobrepeso">
+								<option value="[00234] Riesgo de sobrepeso">
+								<option value="[00235] Estreñimiento crónico funcional">
+								<option
+									value="[00236] Riesgo de estreñimiento crónico funcional">
+								<option value="[00237] Deterioro de la posición sedente">
+								<option value="[00238] Deterioro de la posición bípeda">
+								<option
+									value="[00239] Riesgo de deterioro de la función cardiovascular">
+								<option value="[00240] Riesgo de disminución del gasto cardíaco">
+								<option
+									value="[00241] Deterioro de la regulación del estado de ánimo">
+								<option
+									value="[00242] Deterioro de la autonomía para la toma de decisiones">
+								<option
+									value="[00243] Disposición para mejorar la autonomía para la toma de decisiones">
+								<option
+									value="[00244] Riesgo de deterioro de la autonomía para la toma de decisiones">
+								<option value="[00245] Riesgo de lesión corneal">
+								<option
+									value="[00246] Riesgo de retraso en la recuperación quirúrgica">
+								<option value="[00247] Riesgo de deterioro de la mucosa oral">
+								<option
+									value="[00248] Riesgo de deterioro de la integridad tisular">
+								<option value="[00249] Riesgo de úlcera por presión">
+								<option value="[00250] Riesgo de lesión en el tracto urinario">
+								<option value="[00251] Labilidad emocional">
+								<option value="[00253] Riesgo de hipotermia">
+								<option value="[00254] Riesgo de hipotermia perioperatoria">
+								<option value="[00255] Síndrome de dolor crónico">
+								<option value="[00256] Dolor de parto">
+								<option value="[00257]	Síndrome de fragilidad del anciano">
+							</datalist>
+						</div>
+						
+					</div>
+					
+				</div>
+				
+				<button type="button"
+					class="btn collapsed border-success gap-3"
+					data-bs-toggle="collapse" data-bs-target="#customize-collapse"
+					aria-expanded="false">Resultados
+						esperados (NOC)</button>
+				<div class="collapse" id="customize-collapse">
+					<div class="row">
+						<div class="form-group col-md-6">
+						<div id="Resultado">
+						<div class="clonarResultado">
+							<label>Resultado esperado:</label> <input name="busquedamodelos"
+								list="Diagnostico1" class="form-control "
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{diagnosticoNOC}">
+						</div>
+						</div>
+						<div id="contenedor1"></div>
+							<br>
+							<button type="button" class="btn btn-primary" id="agregar" onclick="addResultado();">Agregar otro resultado esperado</button>
+							<datalist id="Diagnostico1">
+								<option value="[0001] resistencia">
+								<option value="[0002] conservación de la energía">
+								<option value="[0003] descanso">
+								<option value="[0004] sueño">
+								<option value="[0005] tolerancia de la actividad">
+								<option value="[0006] energía psicomotora">
+								<option value="[0007] nivel de fatiga">
+								<option value="[0008] fatiga: efectos nocivos">
+								<option value="[0100] desarrollo infantil: 2 meses">
+								<option value="[0101] desarrollo infantil: 4 meses">
+								<option value="[0102] desarrollo infantil: 6 meses">
+								<option value="[0103] desarrollo infantil: 12 meses">
+								<option value="[0104] desarrollo infantil: 2 años">
+								<option value="[0105] desarrollo infantil: 3 años">
+								<option value="[0106] desarrollo infantil: 4 años">
+								<option value="[0107] desarrollo infantil: 5 años">
+								<option value="[0108] desarrollo infantil: segunda infancia">
+								<option value="[0109] desarrollo infantil: adolescencia">
+								<option value="[0110] crecimiento">
+								<option value="[0111] estado fetal: prenatal">
+								<option value="[0112] estado fetal: durante el parto">
+								<option value="[0113] envejecimiento físico">
+								<option value="[0114] maduración física: femenina">
+								<option value="[0115] maduración física: masculina">
+								<option value="[0116] participación en juegos">
+								<option value="[0117] adaptación del prematuro">
+								<option value="[0118] adaptación del recién nacido">
+								<option value="[0119] funcionamiento sexual">
+								<option value="[0120] desarrollo infantil: 1 mes">
+								<option value="[0121] desarrollo: adulto mayor">
+								<option value="[0122] desarrollo: adulto de mediana edad">
+								<option value="[0123] desarrollo: adulto joven">
+								<option value="[0200] ambular">
+								<option value="[0201] ambular: silla de ruedas">
+								<option value="[0202] equilibrio">
+								<option value="[0203] posición corporal: autoiniciada">
+								<option
+									value="[0204] consecuencias de la inmovilidad: fisiológicas">
+								<option
+									value="[0205] consecuencias de la inmovilidad: psicocognitivas">
+								<option value="[0206] movimiento articular">
+								<option value="[0207] movimiento articular: pasivo">
+								<option value="[0208] movilidad">
+								<option value="[0210] realización de transferencia">
+								<option value="[0211] función esquelética">
+								<option value="[0212] movimiento coordinado">
+								<option value="[0213] movimiento articular: tobillo">
+								<option value="[0214] movimiento articular: codo">
+								<option value="[0215] movimiento articular: dedos">
+								<option value="[0216] movimiento articular: cadera">
+								<option value="[0217] movimiento articular: rodilla">
+								<option value="[0218] movimiento articular: cuello">
+								<option value="[0219] movimiento articular: hombro">
+								<option value="[0220] movimiento articular: columna vertebral">
+								<option value="[0221] movimiento articular: muñeca">
+								<option value="[0222] marcha">
+								<option
+									value="[0300] autocuidados: actividades de la vida diaria (avd)">
+								<option value="[0301] autocuidados: baño">
+								<option value="[0302] autocuidados: vestir">
+								<option value="[0303] autocuidados: comer">
+								<option value="[0305] autocuidados: higiene">
+								<option
+									value="[0306] autocuidados: actividades instrumentales de la vida diaria (aivd)">
+								<option value="[0307] autocuidados: medicación no parenteral">
+								<option value="[0308] autocuidados: higiene oral">
+								<option value="[0309] autocuidados: medicación parenteral">
+								<option value="[0310] autocuidados: uso del inodoro">
+								<option
+									value="[0311] preparación para el alta: vida independiente">
+								<option value="[0312] preparación para el alta: vivir con apoyo">
+								<option value="[0313] nivel de autocuidado">
+								<option value="[0400] efectividad de la bomba cardíaca">
+								<option value="[0401] estado circulatorio">
+								<option value="[0402] estado respiratorio: intercambio gaseoso">
+								<option value="[0403] estado respiratorio: ventilación">
+								<option value="[0404] perfusión tisular: órganos abdominales">
+								<option value="[0405] perfusión tisular: cardíaca">
+								<option value="[0406] perfusión tisular: cerebral">
+								<option value="[0407] perfusión tisular: periférica">
+								<option value="[0408] perfusión tisular: pulmonar">
+								<option value="[0409] coagulación sanguínea">
+								<option
+									value="[0410] estado respiratorio: permeabilidad de las vías respiratorias">
+								<option
+									value="[0411] respuesta de la ventilación mecánica: adulto">
+								<option
+									value="[0412] respuesta del destete de la ventilación mecánica: adulto">
+								<option value="[0413] severidad de la pérdida de sangre">
+								<option value="[0414] estado cardiopulmonar">
+								<option value="[0415] estado respiratorio">
+								<option value="[0416] perfusión tisular: celular">
+								<option value="[0417] severidad del shock: anafiláctico">
+								<option value="[0418] severidad del shock: cardiogénico">
+								<option value="[0419] severidad del shock: hipovolémico">
+								<option value="[0420] severidad del shock: neurogénico">
+								<option value="[0421] severidad del shock: séptico">
+								<option value="[0422] perfusión tisular">
+								<option value="[0500] continencia intestinal">
+								<option value="[0501] eliminación intestinal">
+								<option value="[0502] continencia urinaria">
+								<option value="[0503] eliminación urinaria">
+								<option value="[0504] función renal">
+								<option value="[0600] equilibrio electrolítico y ácido-base">
+								<option value="[0601] equilibrio hídrico">
+								<option value="[0602] hidratación">
+								<option value="[0603] severidad de la sobrecarga de líquidos">
+								<option
+									value="[0604] severidad de la acidosis respiratoria aguda">
+								<option
+									value="[0605] severidad de la alcalosis respiratoria aguda">
+								<option value="[0606] equilibrio electrolítico">
+								<option value="[0607] severidad de la hipercalcemia">
+								<option value="[0608] severidad de la hipercloremia">
+								<option value="[0609] severidad de la hiperpotasemia">
+								<option value="[0610] severidad de la hipermagnesemia">
+								<option value="[0611] severidad de la hipernatremia">
+								<option value="[0612] severidad de la hiperfosfatemia">
+								<option value="[0613] severidad de la hipocalcemia">
+								<option value="[0614] severidad de la hipocloremia">
+								<option value="[0615] severidad de la hipopotasemia">
+								<option value="[0616] severidad de la hipomagnesemia">
+								<option value="[0617] severidad de la hiponatremia">
+								<option value="[0618] severidad de la hipofosfatemia">
+								<option value="[0619] severidad de la acidosis metabólica">
+								<option value="[0620] severidad de la alcalosis metabólica">
+								<option value="[0700] reacción transfusional sanguínea">
+								<option value="[0702] estado inmune">
+								<option value="[0703] severidad de la infección">
+								<option value="[0704] autocontrol: asma">
+								<option value="[0705] respuesta alérgica: localizada">
+								<option value="[0706] respuesta alérgica: sistémica">
+								<option
+									value="[0707] respuesta de hipersensibilidad inmunológica">
+								<option value="[0708] severidad de la infección: recién nacido">
+								<option value="[0800] termorregulación">
+								<option value="[0801] termorregulación: recién nacido">
+								<option value="[0802] signos vitales">
+								<option value="[0803] función hepática">
+								<option value="[0900] cognición">
+								<option value="[0901] orientación cognitiva">
+								<option value="[0902] comunicación">
+								<option value="[0903] comunicación: expresiva">
+								<option value="[0904] comunicación: receptiva">
+								<option value="[0905] concentración">
+								<option value="[0906] toma de decisiones">
+								<option value="[0907] elaboración de la información">
+								<option value="[0908] memoria">
+								<option value="[0909] estado neurológico">
+								<option value="[0910] estado neurológico: autónomo">
+								<option value="[0911] estado neurológico: control motor central">
+								<option value="[0912] estado neurológico: consciencia">
+								<option
+									value="[0913] estado neurológico: función sensitiva/motora de pares craneales">
+								<option
+									value="[0914] estado neurológico: función sensitiva/motora medular">
+								<option value="[0915] nivel de hiperactividad">
+								<option value="[0916] nivel de delirio">
+								<option value="[0917] estado neurológico: periférico">
+								<option value="[0918] atención al lado afectado">
+								<option value="[0919] pensamiento abstracto">
+								<option value="[0920] nivel de demencia">
+								<option
+									value="[1000] establecimiento de la lactancia materna: lactante">
+								<option
+									value="[1001] establecimiento de la lactancia materna: madre">
+								<option value="[1002] mantenimiento de la lactancia materna">
+								<option value="[1003] lactancia materna: destete">
+								<option value="[1004] estado nutricional">
+								<option
+									value="[1005] estado nutricional: determinaciones bioquímicas">
+								<option value="[1006] peso: masa corporal">
+								<option value="[1007] estado nutricional: energía">
+								<option
+									value="[1008] estado nutricional: ingestión alimentaria y de líquidos">
+								<option
+									value="[1009] estado nutricional: ingestión de nutrientes">
+								<option value="[1010] estado de deglución">
+								<option value="[1011] estado de deglución: fase esofágica">
+								<option value="[1012] estado de deglución: fase oral">
+								<option value="[1013] estado de deglución: fase faríngea">
+								<option value="[1014] apetito">
+								<option value="[1015] función gastrointestinal">
+								<option
+									value="[1016] establecimiento de la alimentación con biberón: lactante">
+								<option
+									value="[1017] realización de la alimentación con biberón">
+								<option
+									value="[1018] establecimiento de la alimentación con taza: lactante">
+								<option value="[1019] realización de la alimentación con taza">
+								<option value="[1020] estado nutricional del lactante">
+								<option value="[1100] salud oral">
+								<option
+									value="[1101] integridad tisular: piel y membranas mucosas">
+								<option
+									value="[1102] curación de la herida: por primera intención">
+								<option
+									value="[1103] curación de la herida: por segunda intención">
+								<option value="[1104] curación ósea">
+								<option value="[1105] integridad del acceso para hemodiálisis">
+								<option value="[1106] curación de las quemaduras">
+								<option value="[1107] recuperación de las quemaduras">
+								<option value="[1200] imagen corporal">
+								<option value="[1201] esperanza">
+								<option value="[1202] identidad">
+								<option value="[1203] severidad de la soledad">
+								<option value="[1204] equilibrio emocional">
+								<option value="[1205] autoestima">
+								<option value="[1206] deseo de vivir">
+								<option value="[1207] identidad sexual">
+								<option value="[1208] nivel de depresión">
+								<option value="[1209] motivación">
+								<option value="[1210] nivel de miedo">
+								<option value="[1211] nivel de ansiedad">
+								<option value="[1212] nivel de estrés">
+								<option value="[1213] nivel de miedo: infantil">
+								<option value="[1214] nivel de agitación">
+								<option value="[1215] conciencia de uno mismo">
+								<option value="[1216] nivel de ansiedad social">
+								<option value="[1300] aceptación: estado de salud">
+								<option value="[1301] adaptación del niño a la hospitalización">
+								<option value="[1302] afrontamiento de problemas">
+								<option value="[1304] resolución de la aflicción">
+								<option value="[1305] modificación psicosocial: cambio de vida">
+								<option value="[1306] dolor: respuesta psicológica adversa">
+								<option value="[1307] muerte digna">
+								<option value="[1308] adaptación a la discapacidad física">
+								<option value="[1309] resiliencia personal">
+								<option value="[1310] resolución de la culpa">
+								<option value="[1311] adaptación al traslado">
+								<option value="[1400] autocontrol de la conducta abusiva">
+								<option value="[1401] autocontrol de la agresión">
+								<option value="[1402] autocontrol de la ansiedad">
+								<option value="[1403] autocontrol del pensamiento distorsionado">
+								<option value="[1404] autocontrol del miedo">
+								<option value="[1405] autocontrol de los impulsos">
+								<option value="[1406] autocontrol de la mutilación">
+								<option
+									value="[1407] consecuencias de la adicción a sustancias psicoactivas">
+								<option value="[1408] autocontrol del impulso suicida">
+								<option value="[1409] autocontrol de la depresión">
+								<option value="[1410] autocontrol de la ira">
+								<option
+									value="[1411] autocontrol del trastorno de la alimentación ">
+								<option value="[1500] lazos afectivos padres-hijo ">
+								<option value="[1501] desempeño del rol ">
+								<option value="[1502] habilidades de interacción social ">
+								<option value="[1503] implicación social ">
+								<option value="[1504] soporte social ">
+								<option value="[1600] conducta de adhesión ">
+								<option value="[1601] conducta de cumplimiento ">
+								<option value="[1602] conducta de fomento de la salud ">
+								<option value="[1603] conducta de búsqueda de la salud ">
+								<option value="[1604] participación en actividades de ocio ">
+								<option value="[1605] control del dolor ">
+								<option
+									value="[1606] participación en las decisiones sobre asistencia sanitaria ">
+								<option value="[1607] conducta sanitaria prenatal ">
+								<option value="[1608] control de síntomas ">
+								<option value="[1610] conducta de compensación auditiva ">
+								<option value="[1611] conducta de compensación visual ">
+								<option value="[1613] autogestión de los cuidados ">
+								<option value="[1614] autonomía personal ">
+								<option value="[1615] autocuidado de la ostomía ">
+								<option value="[1616] rendimiento de los mecanismos corporales ">
+								<option value="[1617] autocontrol: enfermedad cardíaca ">
+								<option value="[1618] control de náuseas y vómitos ">
+								<option value="[1619] autocontrol: diabetes ">
+								<option value="[1620] autocontrol de las convulsiones ">
+								<option value="[1621] conducta de adhesión: dieta saludable ">
+								<option
+									value="[1622] conducta de cumplimiento: dieta prescrita ">
+								<option
+									value="[1623] conducta de cumplimiento: medicación prescrita ">
+								<option
+									value="[1624] conducta de la salud maternal en el posparto ">
+								<option
+									value="[1625] conducta de abandono del consumo de tabaco ">
+								<option value="[1626] conducta de aumento de peso ">
+								<option value="[1627] conducta de pérdida de peso ">
+								<option value="[1628] conducta de mantenimiento del peso ">
+								<option
+									value="[1629] conducta de abandono del consumo de alcohol ">
+								<option
+									value="[1630] conducta de abandono del consumo de drogas ">
+								<option value="[1631] autocontrol: esclerosis múltiple ">
+								<option
+									value="[1632] conducta de cumplimiento: actividad prescrita ">
+								<option value="[1633] participación en el ejercicio ">
+								<option
+									value="[1634] conducta personal de detección precoz sanitaria ">
+								<option value="[1635] gestión del tiempo personal ">
+								<option value="[1700] creencias sobre la salud ">
+								<option
+									value="[1701] creencias sobre la salud: capacidad percibida para actuar ">
+								<option
+									value="[1702] creencias sobre la salud: percepción de control ">
+								<option
+									value="[1703] creencias sobre la salud: percepción de recursos ">
+								<option
+									value="[1704] creencias sobre la salud: percepción de amenaza ">
+								<option value="[1705] orientación sobre la salud ">
+								<option value="[1800] conocimiento: lactancia materna ">
+								<option value="[1801] conocimiento: seguridad física infantil ">
+								<option value="[1802] conocimiento: dieta prescrita ">
+								<option value="[1803] conocimiento: proceso de la enfermedad ">
+								<option value="[1804] conocimiento: conservación de la energía ">
+								<option value="[1805] conocimiento: conducta sanitaria ">
+								<option value="[1806] conocimiento: recursos sanitarios ">
+								<option value="[1808] conocimiento: medicación">
+								<option value="[1809] conocimiento: seguridad personal ">
+								<option value="[1810] conocimiento: gestación ">
+								<option value="[1811] conocimiento: actividad prescrita ">
+								<option
+									value="[1812] conocimiento: control del consumo de sustancias">
+								<option value="[1813] conocimiento: régimen terapéutico ">
+								<option
+									value="[1814] conocimiento: procedimientos terapéuticos ">
+								<option value="[1815] conocimiento: funcionamiento sexual ">
+								<option value="[1816] conocimiento: fomento de la fertilidad ">
+								<option value="[1817] conocimiento: parto y alumbramiento ">
+								<option
+									value="[1818] conocimiento: salud materna en el puerperio ">
+								<option value="[1819] conocimiento: cuidados del lactante ">
+								<option value="[1820] conocimiento: control de la diabetes ">
+								<option value="[1821] conocimiento: prevención del embarazo ">
+								<option
+									value="[1822] conocimiento: salud materna en la preconcepción ">
+								<option value="[1823] conocimiento: fomento de la salud ">
+								<option value="[1826] conocimiento: cuidado de los hijos ">
+								<option value="[1827] conocimiento: mecanismos corporales ">
+								<option value="[1828] conocimiento: prevención de caídas ">
+								<option value="[1829] conocimiento: cuidados de la ostomía ">
+								<option
+									value="[1830] conocimiento: control de la enfermedad cardíaca ">
+								<option value="[1831] conocimiento: manejo de la artritis ">
+								<option value="[1832] conocimiento: manejo del asma ">
+								<option value="[1833] conocimiento: manejo del cáncer ">
+								<option
+									value="[1834] conocimiento: reducción de la amenaza del cáncer ">
+								<option
+									value="[1835] conocimiento: manejo de la insuficiencia cardíaca ">
+								<option value="[1836] conocimiento: manejo de la depresión ">
+								<option value="[1837] conocimiento: control de la hipertensión ">
+								<option
+									value="[1838] conocimiento: manejo de la esclerosis múltiple ">
+								<option
+									value="[1839] conocimiento: funcionamiento sexual durante el embarazo y el puerperio ">
+								<option
+									value="[1840] conocimiento: cuidados del recién nacido pretérmino ">
+								<option value="[1841] conocimiento: manejo del peso ">
+								<option value="[1842] conocimiento: control de la infección ">
+								<option value="[1843] conocimiento: manejo del dolor ">
+								<option
+									value="[1844] conocimiento: manejo de la enfermedad aguda ">
+								<option
+									value="[1845] conocimiento: manejo del tratamiento anticoagulante">
+								<option value="[1846] conocimiento: alimentación con biberón ">
+								<option
+									value="[1847] conocimiento: manejo de la enfermedad crónica">
+								<option
+									value="[1847] conocimiento: manejo de la enfermedad crónica">
+								<option
+									value="[1849] conocimiento: manejo de la enfermedad arterial coronaria ">
+								<option value="[1850] conocimiento: alimentación con taza ">
+								<option value="[1851] conocimiento: manejo de la demencia ">
+								<option value="[1852] conocimiento: manejo de la arritmia ">
+								<option
+									value="[1853] conocimiento: manejo del trastorno de la alimentación ">
+								<option value="[1854] conocimiento: dieta saludable ">
+								<option value="[1855] conocimiento: estilo de vida saludable ">
+								<option
+									value="[1856] conocimiento: manejo de la enfermedad inflamatoria intestinal">
+								<option
+									value="[1857] conocimiento: manejo de la enfermedad renal ">
+								<option
+									value="[1858] conocimiento: manejo del trastorno lipídico ">
+								<option value="[1859] conocimiento: manejo de la osteoporosis ">
+								<option
+									value="[1860] conocimiento: manejo de la enfermedad arterial periférica ">
+								<option value="[1861] conocimiento: manejo de la neumonía ">
+								<option value="[1862] conocimiento: manejo del estrés ">
+								<option
+									value="[1863] conocimiento: manejo de la enfermedad cerebrovascular ">
+								<option
+									value="[1864] conocimiento: prevención de la enfermedad cerebrovascular ">
+								<option value="[1865] conocimiento: prevención de trombos ">
+								<option value="[1866] conocimiento: gestión del tiempo ">
+								<option value="[1900] conductas de vacunación ">
+								<option
+									value="[1901] desempeño del rol de padres: seguridad psicosocial ">
+								<option value="[1902] control del riesgo ">
+								<option value="[1903] control del riesgo: consumo de alcohol ">
+								<option value="[1904] control del riesgo: consumo de drogas ">
+								<option
+									value="[1905] control del riesgo: enfermedades de transmisión sexual (ets) ">
+								<option value="[1906] control del riesgo: consumo de tabaco ">
+								<option value="[1907] control del riesgo: embarazo no deseado ">
+								<option value="[1908] detección del riesgo ">
+								<option value="[1909] conducta de prevención de caídas ">
+								<option
+									value="[1910] conducta de seguridad: ambiente seguro del hogar ">
+								<option value="[1911] conductas de seguridad personal ">
+								<option value="[1912] caídas ">
+								<option value="[1913] severidad de la lesión física ">
+								<option
+									value="[1914] control del riesgo: enfermedad cardiovascular ">
+								<option value="[1915] control del riesgo: deterioro auditivo ">
+								<option value="[1916] control del riesgo: deterioro visual ">
+								<option value="[1917] control del riesgo: cáncer ">
+								<option value="[1918] prevención de la aspiración ">
+								<option value="[1919] fugas ">
+								<option value="[1920] riesgo de tendencia a las fugas ">
+								<option value="[1921] preparación antes del procedimiento ">
+								<option value="[1922] control del riesgo: hipertermia ">
+								<option value="[1923] control del riesgo: hipotermia ">
+								<option value="[1924] control del riesgo: proceso infeccioso ">
+								<option value="[1925] control del riesgo: exposición al sol ">
+								<option value="[1926] deambulación segura ">
+								<option value="[1927] control del riesgo: ojo seco ">
+								<option value="[1928] control del riesgo: hipertensión ">
+								<option value="[1929] control del riesgo: trastorno lipídico ">
+								<option value="[1930] control del riesgo: osteoporosis ">
+								<option
+									value="[1931] control del riesgo: accidente cerebrovascular ">
+								<option value="[1932] control del riesgo: trombos ">
+								<option value="[1933] control del riesgo: hipotensión ">
+								<option value="[1934] entorno seguro de asistencia sanitaria ">
+								<option value="[2000] calidad de vida ">
+								<option value="[2001] salud espiritual ">
+								<option value="[2002] bienestar personal ">
+								<option value="[2003] severidad del sufrimiento ">
+								<option value="[2004] forma física ">
+								<option value="[2005] estado de salud del estudiante ">
+								<option value="[2006] estado de salud personal ">
+								<option value="[2007] muerte confortable ">
+								<option value="[2008] estado de comodidad ">
+								<option value="[2009] estado de comodidad: entorno ">
+								<option value="[2010] estado de comodidad: física ">
+								<option value="[2011] estado de comodidad: psicoespiritual ">
+								<option value="[2012] estado de comodidad: sociocultural ">
+								<option value="[2013] equilibrio en el estilo de vida ">
+								<option value="[2101] dolor: efectos nocivos ">
+								<option value="[2102] nivel del dolor ">
+								<option value="[2103] severidad de los síntomas ">
+								<option
+									value="[2104] severidad de los síntomas de la perimenopausia ">
+								<option
+									value="[2105] severidad de los síntomas del síndrome premenstrual (spm) ">
+								<option value="[2106] náuseas y vómitos: efectos nocivos ">
+								<option value="[2107] severidad de las náuseas y los vómitos ">
+								<option value="[2108] severidad de la retirada de sustancias ">
+								<option value="[2109] nivel de malestar ">
+								<option value="[2110] severidad del ojo seco ">
+								<option value="[2111] severidad de la hiperglucemia ">
+								<option value="[2112] severidad de la hipertensión ">
+								<option value="[2113] severidad de la hipoglucemia ">
+								<option value="[2114] severidad de la hipotensión ">
+								<option
+									value="[2115] severidad de la enfermedad arterial periférica ">
+								<option
+									value="[2200] adaptación del cuidador principal al ingreso del paciente en un centro sanitario ">
+								<option
+									value="[2202] preparación del cuidador familiar domiciliario ">
+								<option
+									value="[2203] alteración del estilo de vida del cuidador principal ">
+								<option
+									value="[2204] relación entre el cuidador principal y el paciente ">
+								<option
+									value="[2205] rendimiento del cuidador principal: cuidados directos ">
+								<option
+									value="[2206] rendimiento del cuidador principal: cuidados indirectos ">
+								<option
+									value="[2208] factores estresantes del cuidador familiar ">
+								<option value="[2210] resistencia del papel del cuidador ">
+								<option value="[2211] desempeño del rol de padres ">
+								<option value="[2300] nivel de glucemia ">
+								<option value="[2301] respuesta a la medicación">
+								<option
+									value="[2302] aclaración de toxinas sistémicas: diálisis ">
+								<option value="[2303] recuperación posterior al procedimiento ">
+								<option value="[2304] recuperación quirúrgica: convalecencia ">
+								<option
+									value="[2305] recuperación quirúrgica: postoperatorio inmediato ">
+								<option value="[2400] función sensitiva: táctil ">
+								<option value="[2401] función sensitiva: auditiva ">
+								<option value="[2402] función sensitiva: propioceptiva ">
+								<option value="[2403] función sensitiva: gusto y olfato ">
+								<option value="[2404] función sensitiva: visión ">
+								<option value="[2405] función sensorial ">
+								<option value="[2500] cese del abuso ">
+								<option value="[2501] protección del abuso ">
+								<option value="[2502] recuperación tras el abuso: emocional ">
+								<option value="[2503] recuperación tras el abuso: económico ">
+								<option value="[2504] recuperación tras el abuso: físico ">
+								<option value="[2505] recuperación tras el abuso: sexual ">
+								<option value="[2506] salud emocional del cuidador principal ">
+								<option value="[2507] salud física del cuidador principal ">
+								<option value="[2508] bienestar del cuidador principal ">
+								<option value="[2509] estado materno: preparto ">
+								<option value="[2510] estado materno: durante el parto ">
+								<option value="[2511] estado materno: puerperio ">
+								<option value="[2512] recuperación del abandono ">
+								<option value="[2513] cese de la desatención ">
+								<option value="[2514] recuperación tras un abuso ">
+								<option
+									value="[2600] afrontamiento de los problemas de la familia ">
+								<option value="[2601] clima social de la familia ">
+								<option value="[2602] funcionamiento de la familia ">
+								<option value="[2603] integridad de la familia ">
+								<option value="[2604] normalización de la familia ">
+								<option
+									value="[2605] participación de la familia en la asistencia sanitaria profesional ">
+								<option value="[2606] estado de salud de la familia ">
+								<option value="[2608] resiliencia familiar ">
+								<option value="[2609] apoyo familiar durante el tratamiento">
+								<option value="[2610] control del riesgo familiar: obesidad ">
+								<option value="[2700] competencia social ">
+								<option value="[2701] estado de salud de la comunidad ">
+								<option value="[2702] nivel de violencia social ">
+								<option value="[2703] respuesta a la aflicción de la comunidad ">
+								<option value="[2704] resiliencia de la comunidad ">
+								<option value="[2800] estado de inmunización de la comunidad ">
+								<option
+									value="[2801] control del riesgo social: enfermedad crónica ">
+								<option
+									value="[2802] control del riesgo social: enfermedad transmisible ">
+								<option
+									value="[2803] control del riesgo social: exposición al plomo ">
+								<option
+									value="[2804] preparación para un desastre en la comunidad ">
+								<option value="[2805] control del riesgo social: violencia ">
+								<option
+									value="[2806] respuesta ante un desastre en la comunidad ">
+								<option
+									value="[2807] efectividad de detección precoz sanitaria en la comunidad ">
+								<option value="[2808] efectividad del programa comunitario ">
+								<option value="[2809] control del riesgo social: obesidad">
+								<option
+									value="[2810] control del riesgo social: tradiciones culturales no saludables ">
+								<option
+									value="[2900] desempeño del rol de padres: seguridad física del lactante y del niño pequeño ">
+								<option
+									value="[2901] desempeño del rol de padres: seguridad física en la primera y segunda infancia ">
+								<option
+									value="[2902] desempeño del rol de padres: seguridad física del adolescente ">
+								<option value="[2903] desempeño del rol de padres: adolescente ">
+								<option value="[2904] desempeño del rol de padres: lactante ">
+								<option
+									value="[2905] desempeño del rol de padres: segunda infancia ">
+								<option value="[2906] desempeño del rol de padres: preescolar ">
+								<option
+									value="[2907] desempeño del rol de padres: niño pequeño ">
+								<option
+									value="[3000] satisfacción del paciente/usuario: acceso a los recursos asistenciales ">
+								<option
+									value="[3001] satisfacción del paciente/usuario: cuidados ">
+								<option
+									value="[3002] satisfacción del paciente/usuario: comunicación ">
+								<option
+									value="[3004] satisfacción del paciente/usuario: cumplimiento de las necesidades culturales ">
+								<option
+									value="[3005] satisfacción del paciente/usuario: asistencia funcional ">
+								<option
+									value="[3006] satisfacción del paciente/usuario: cuidado físico ">
+								<option
+									value="[3007] satisfacción del paciente/usuario: entorno físico ">
+								<option
+									value="[3008] satisfacción del paciente/usuario: protección de sus derechos ">
+								<option
+									value="[3009] satisfacción del paciente/usuario: cuidado psicológico ">
+								<option
+									value="[3010] satisfacción del paciente/usuario: seguridad ">
+								<option
+									value="[3011] satisfacción del paciente/usuario: control de los síntomas ">
+								<option
+									value="[3012] satisfacción del paciente/usuario: enseñanza ">
+								<option
+									value="[3013] satisfacción del paciente/usuario: aspectos técnicos del cuidado ">
+								<option value="[3014] satisfacción del paciente/usuario ">
+								<option
+									value="[3015] satisfacción del paciente/usuario: gestión de casos ">
+								<option
+									value="[3016] satisfacción del paciente/usuario: manejo del dolor ">
+								<option value="[3100] autocontrol: enfermedad aguda ">
+								<option value="[3101] autocontrol: tratamiento anticoagulante ">
+								<option value="[3102] autocontrol: enfermedad crónica ">
+								<option
+									value="[3103] autocontrol: enfermedad pulmonar obstructiva crónica ">
+								<option
+									value="[3104] autocontrol: enfermedad arterial coronaria ">
+								<option value="[3105] autocontrol: arritmia ">
+								<option value="[3106] autocontrol: insuficiencia cardíaca ">
+								<option value="[3107] autocontrol: hipertensión ">
+								<option value="[3108] autocontrol: enfermedad renal ">
+								<option value="[3109] autocontrol: trastorno lipídico ">
+								<option value="[3110] autocontrol: osteoporosis ">
+								<option
+									value="[3111] autocontrol: enfermedad arterial periférica ">
+							</datalist>
+						</div>
+						<div class="col-md-6">
+							<label>Requisito de autocuidado:</label> <input
+								name="busquedamodelos" list="Rautocuidado" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{requisitoAutocuidado}">
+							<datalist id="Rautocuidado">
+								<option value="Conservacion del aire">
+								<option value="Conservacion del agua">
+								<option
+									value="Mantenimiento de un aporte suficiente de alimento">
+								<option value="Eliminacion">
+								<option value="Equilibrio entre la actividad y el descanso">
+								<option value="Soledad e interaccion social">
+								<option value="Prevencion de riesgo">
+								<option
+									value="Promocion dentro del funcionamiento y desarrollo humano dentro de los grupos sociales">
+							</datalist>
+						</div>
+						<div class="col-md-6">
+							<label>Meta de autocuidado: </label><input name="busquedamodelos"
+								list="autpcuidado" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{metaAutocuidado}">
+						</div>
+						<div class="col-md-6">
+							<label>Escala de valoracion: </label><input name="busquedamodelos"
+								list="escala" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{escalaValoracion}">
+								<datalist id="escala">
+									<option value="1. Gravemente Comprometido">
+									<option value="2. Sustancialmente Comprometido">
+									<option value="3. Moderadamente Comprometido">
+									<option value="4. Levemente Comprometido">
+									<option value="5. No Comprometido">
+								</datalist>
+						</div>
+						<div class="col-md-6">
+							<label>Puntuacion Inicial: </label><input name="busquedamodelos"
+								 class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita la puntuacion inicial"
+								th:field="*{puntuacionInicial}">
+						</div>
+						</div>
+						<div class="input-group-text col-md-12">
+							<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+							<label>Abierto a indicadores: </label>
+							<textarea name="txaMessage" id="txaMessage" rows="5" required class="form-control" aria-label="With textarea" th:field="*{abiertoIndicadores}" >
+							</textarea>
+							<div class="text-right"><span class="valid-text pt-3" id="txaCount">255 Caracteres restantes</span></div>
+							<script type="text/javascript">
+							$(document).ready(function() {
+							    var limit = 255;
+							    $("#txaMessage").keyup(function(event) {
+							        var value = limit - $(this).val().length;
+
+							        if (value <= 0) {
+							            $('#txaMessage').removeClass('is-valid');
+							            $('#txaMessage').addClass('is-invalid');
+							            $('#txaCount').html(value);
+							            $('#txaCount').removeClass('valid-text');
+							            $('#txaCount').addClass('invalid-text');
+							        } else if (value > 0) {
+							            $('#txaMessage').removeClass('is-invalid');
+							            $('#txaMessage').addClass('is-valid');
+							            $('#txaCount').html(value);
+							            $('#txaCount').removeClass('invalid-text');
+							            $('#txaCount').addClass('valid-text');
+							        }
+							    });
+							});
+							</script>
+							
+						</div>		
+				</div>
+				<button type="button"
+					class="btn collapsed border-success gap-3"
+					data-bs-toggle="collapse" data-bs-target="#layout-collapse"
+					aria-expanded="false">Intervenciones
+						(NIC)</button>
+				<div class="collapse" id="layout-collapse">
+					<div class="row">
+						<div class="col-md-6">
+							<div id="Inter">
+							<div class="clonarInter">
+							<label>Intervenciones de enfermeria: </label><input
+								name="busquedamodelos" list="Intervencionesenfer"
+								class="form-control" aria-label="Default select example"
+								placeholder="Digita o elige una opcion"
+								th:field="*{intervencionesEnfermeria}">
+							</div>
+							</div>
+							<div id="contenedor2"></div>
+							<br>
+							<button type="button" class="btn btn-primary" id="agregar" onclick="addInter();">Agregar otra Intervencion</button>
+							<datalist id="Intervencionesenfer">
+								<option value="[0140] fomentar la mecánica corporal "></option>
+								<option value="[0180] manejo de la energía "></option>
+								<option value="[0200] fomento del ejercicio "></option>
+								<option
+									value="[0201] fomento del ejercicio: entrenamiento de fuerza ">
+								</option>
+								<option value="[0202] fomento del ejercicio: estiramientos ">
+								</option>
+								<option value="[0221] terapia de ejercicios: ambulación ">
+								</option>
+								<option value="[0222] terapia de ejercicios: equilibrio ">
+								</option>
+								<option
+									value="[0224] terapia de ejercicios: movilidad articular ">
+								</option>
+								<option value="[0226] terapia de ejercicios: control muscular ">
+								</option>
+								<option value="[0410] cuidados de la incontinencia intestinal ">
+								</option>
+								<option
+									value="[0412] cuidados de la incontinencia intestinal: encopresis ">
+								</option>
+								<option value="[0430] control intestinal "></option>
+								<option value="[0440] entrenamiento intestinal "></option>
+								<option
+									value="[0450] manejo del estreñimiento/impactación fecal ">
+								</option>
+								<option value="[0460] manejo de la diarrea "></option>
+								<option value="[0466] administración de enema "></option>
+								<option value="[0470] disminución de la flatulencia "></option>
+								<option value="[0480] cuidados de la ostomía "></option>
+								<option value="[0490] manejo del prolapso rectal "></option>
+								<option value="[0550] irrigación de la vejiga urinaria ">
+								</option>
+								<option value="[0560] ejercicios del suelo pélvico "></option>
+								<option value="[0570] entrenamiento de la vejiga urinaria ">
+								</option>
+								<option value="[0580] sondaje vesical "></option>
+								<option value="[0582] sondaje vesical: intermitente "></option>
+								<option value="[0590] manejo de la eliminación urinaria ">
+								</option>
+								<option value="[0600] entrenamiento del hábito urinario ">
+								</option>
+								<option value="[0610] cuidados de la incontinencia urinaria ">
+								</option>
+								<option
+									value="[0612] cuidados de la incontinencia urinaria: enuresis ">
+								</option>
+								<option value="[0620] cuidados de la retención urinaria ">
+								</option>
+								<option value="[0630] manejo del pesario "></option>
+								<option value="[0640] micción estimulada "></option>
+								<option value="[0740] cuidados del paciente encamado ">
+								</option>
+								<option
+									value="[0762] cuidados del paciente escayolado: mantenimiento ">
+								</option>
+								<option
+									value="[0764] cuidados del paciente escayolado: yeso húmedo ">
+								</option>
+								<option value="[0840] cambio de posición "></option>
+								<option value="[0842] cambio de posición: intraoperatorio ">
+								</option>
+								<option value="[0844] cambio de posición: neurológico ">
+								</option>
+								<option value="[0846] cambio de posición: silla de ruedas ">
+								</option>
+								<option value="[0910] inmovilización "></option>
+								<option value="[0940] cuidados de tracción/inmovilización ">
+								</option>
+								<option value="[0970] transferencia "></option>
+								<option value="[1020] etapas en la dieta "></option>
+								<option
+									value="[1024] etapas en la dieta: cirugía para la pérdida de peso ">
+								</option>
+								<option
+									value="[1030] manejo de los trastornos de la alimentación ">
+								</option>
+								<option value="[1050] alimentación "></option>
+								<option value="[1052] alimentación con biberón "></option>
+								<option value="[1056] alimentación enteral por sonda ">
+								</option>
+								<option value="[1080] sondaje gastrointestinal "></option>
+								<option value="[1100] manejo de la nutrición "></option>
+								<option value="[1120] terapia nutricional "></option>
+								<option value="[1160] monitorizacion nutricional "></option>
+								<option
+									value="[1200] administración de nutrición parenteral total (npt) ">
+								</option>
+								<option value="[1240] ayuda para ganar peso "></option>
+								<option value="[1260] manejo del peso "></option>
+								<option value="[1280] ayuda para disminuir el peso "></option>
+								<option value="[1320] acupresión "></option>
+								<option value="[1330] aromaterapia "></option>
+								<option value="[1340] estimulación cutánea"></option>
+								<option value="[1350] prevención de la sequedad ocular ">
+								</option>
+								<option value="[1380] aplicación de calor o frío "></option>
+								<option value="[1390] tacto curativo "></option>
+								<option value="[1400] manejo del dolor "></option>
+								<option value="[1440] manejo del síndrome premenstrual (spm) ">
+								</option>
+								<option value="[1450] manejo de las náuseas "></option>
+								<option value="[1460] relajación muscular progresiva ">
+								</option>
+								<option value="[1480] masaje "></option>
+								<option value="[1520] reiki "></option>
+								<option
+									value="[1540] estimulación nerviosa eléctrica transcutánea (tens) ">
+								</option>
+								<option value="[1570] manejo del vómito "></option>
+								<option value="[1610] baño "></option>
+								<option value="[1620] cuidado de las lentes de contacto ">
+								</option>
+								<option value="[1630] vestir "></option>
+								<option value="[1640] cuidados de los oídos "></option>
+								<option value="[1650] cuidados de los ojos "></option>
+								<option value="[1660] cuidados de los pies "></option>
+								<option
+									value="[1670] cuidados del cabello y del cuero cabelludo ">
+								</option>
+								<option value="[1680] cuidados de las uñas "></option>
+								<option value="[1710] mantenimiento de la salud bucal ">
+								</option>
+								<option value="[1720] fomentar la salud bucal "></option>
+								<option value="[1730] restablecimiento de la salud bucal ">
+								</option>
+								<option value="[1750] cuidados perineales "></option>
+								<option value="[1770] cuidados post mórtem "></option>
+								<option value="[1800] ayuda con el autocuidado "></option>
+								<option value="[1801] ayuda con el autocuidado: baño/higiene ">
+								</option>
+								<option
+									value="[1802] ayuda con el autocuidado: vestirse/arreglo personal ">
+								</option>
+								<option value="[1803] ayuda con el autocuidado: alimentación ">
+								</option>
+								<option
+									value="[1804] ayuda con el autocuidado: micción/defecación ">
+								</option>
+								<option value="[1805] ayuda con el autocuidado: aivd ">
+								</option>
+								<option value="[1806] ayuda con el autocuidado: transferencia ">
+								</option>
+								<option value="[1850] mejorar el sueño "></option>
+								<option value="[1860] terapia de deglución "></option>
+								<option value="[1870] cuidados del drenaje"></option>
+								<option value="[1872] cuidados del drenaje torácico"></option>
+								<option value="[1874] cuidados de la sonda gastrointestinal ">
+								</option>
+								<option value="[1875] cuidados del catéter umbilical ">
+								</option>
+								<option value="[1876] cuidados del catéter urinario "></option>
+								<option
+									value="[1878] cuidados del catéter de drenaje de ventriculostomía/lumbar ">
+								</option>
+								<option value="[1910] manejo del equilibrio acidobásico ">
+								</option>
+								<option
+									value="[1911] manejo del equilibrio acidobásico: acidosis metabólica ">
+								</option>
+								<option
+									value="[1912] manejo del equilibrio acidobásico: alcalosis metabólica ">
+								</option>
+								<option
+									value="[1913] manejo del equilibrio acidobásico: acidosis respiratoria ">
+								</option>
+								<option
+									value="[1914] manejo del equilibrio acidobásico: alcalosis respiratoria ">
+								</option>
+								<option
+									value="[1920] monitorización del equilibrio acidobásico ">
+								</option>
+								<option value="[2000] manejo de electrólitos "></option>
+								<option value="[2001] manejo de electrólitos: hipercalcemia ">
+								</option>
+								<option value="[2002] manejo de electrólitos: hiperpotasemia ">
+								</option>
+								<option value="[2003] manejo de electrólitos: hipermagnesemia ">
+								</option>
+								<option value="[2004] manejo de electrólitos: hipernatremia ">
+								</option>
+								<option value="[2005] manejo de electrólitos: hiperfosfatemia ">
+								</option>
+								<option value="[2006] manejo de electrólitos: hipocalcemia ">
+								</option>
+								<option value="[2007] manejo de electrólitos: hipopotasemia ">
+								</option>
+								<option value="[2008] manejo de electrólitos: hipomagnesemia ">
+								</option>
+								<option value="[2009] manejo de electrólitos: hiponatremia ">
+								</option>
+								<option value="[2010] manejo de electrólitos: hipofosfatemia ">
+								</option>
+								<option value="[2020] monitorización de electrólitos ">
+								</option>
+								<option value="[2080] manejo de líquidos/electrólitos ">
+								</option>
+								<option value="[2100] terapia de hemodiálisis "></option>
+								<option value="[2110] terapia de hemofiltración "></option>
+								<option value="[2120] manejo de la hiperglucemia "></option>
+								<option value="[2130] manejo de la hipoglucemia "></option>
+								<option value="[2150] terapia de diálisis peritoneal ">
+								</option>
+								<option value="[2210] administración de analgésicos "></option>
+								<option
+									value="[2214] administración de analgésicos: intraespinal ">
+								</option>
+								<option value="[2240] manejo de la quimioterapia "></option>
+								<option value="[2260] manejo de la sedación "></option>
+								<option value="[2280] terapia de sustitución hormonal ">
+								</option>
+								<option value="[2300] administración de medicación "></option>
+								<option value="[2301] administración de medicación: enteral ">
+								</option>
+								<option
+									value="[2302] administración de medicación: interpleural ">
+								</option>
+								<option value="[2303] administración de medicación: intraósea ">
+								</option>
+								<option value="[2304] administración de medicación: oral ">
+								</option>
+								<option
+									value="[2307] administración de medicación: reservorio ventricular ">
+								</option>
+								<option value="[2308] administración de medicación: ótica ">
+								</option>
+								<option value="[2310] administración de medicación: oftálmica ">
+								</option>
+								<option
+									value="[2311] administración de medicación: inhalatoria ">
+								</option>
+								<option
+									value="[2312] administración de medicación: intradérmica ">
+								</option>
+								<option
+									value="[2313] administración de medicación: intramuscular (im) ">
+								</option>
+								<option
+									value="[2314] administración de medicación: intravenosa (iv) ">
+								</option>
+								<option value="[2315] administración de medicación: rectal">
+								</option>
+								<option value="[2316] administración de medicación: tópica ">
+								</option>
+								<option value="[2317] administración de medicación: subcutánea ">
+								</option>
+								<option value="[2318] administración de medicación: vaginal ">
+								</option>
+								<option
+									value="[2319] administración de medicación: intraespinal ">
+								</option>
+								<option value="[2320] administración de medicación: nasal ">
+								</option>
+								<option value="[2380] manejo de la medicación "></option>
+								<option value="[2390] prescribir medicación "></option>
+								<option value="[2395] control de la medicación "></option>
+								<option
+									value="[2400] asistencia en la analgesia controlada por el paciente (acp) ">
+								</option>
+								<option value="[2540] tratamiento del edema cerebral ">
+								</option>
+								<option value="[2550] mejora de la perfusión cerebral ">
+								</option>
+								<option value="[2560] manejo de la disreflexia "></option>
+								<option value="[2570] manejo de la terapia electroconvulsiva ">
+								</option>
+								<option
+									value="[2590] monitorizacion de la presión intracraneal (pic) ">
+								</option>
+								<option value="[2620] monitorización neurológica "></option>
+								<option
+									value="[2660] manejo de la sensibilidad periférica alterada ">
+								</option>
+								<option value="[2680] manejo de las convulsiones "></option>
+								<option value="[2690] precauciones contra las convulsiones ">
+								</option>
+								<option
+									value="[2720] precauciones con la hemorragia subaracnoidea ">
+								</option>
+								<option value="[2760] manejo de la desatención unilateral ">
+								</option>
+								<option value="[2840] administración de anestesia "></option>
+								<option value="[2860] autotransfusión "></option>
+								<option value="[2870] cuidados postanestesia "></option>
+								<option value="[2880] coordinación preoperatoria "></option>
+								<option value="[2900] asistencia quirúrgica "></option>
+								<option value="[2910] manejo de la instrumentación quirúrgica ">
+								</option>
+								<option value="[2920] precauciones quirúrgicas "></option>
+								<option value="[2930] preparación quirúrgica "></option>
+								<option value="[3000] cuidados de la circuncisión "></option>
+								<option
+									value="[3120] intubación y estabilización de la vía aérea ">
+								</option>
+								<option value="[3140] manejo de la vía aérea "></option>
+								<option value="[3160] aspiración de las vías aéreas "></option>
+								<option value="[3180] manejo de las vías aéreas artificiales ">
+								</option>
+								<option value="[3200] precauciones para evitar la aspiración ">
+								</option>
+								<option value="[3210] manejo del asma "></option>
+								<option value="[3230] fisioterapia torácica "></option>
+								<option value="[3250] mejora de la tos "></option>
+								<option value="[3270] desintubación endotraqueal "></option>
+								<option
+									value="[3300] manejo de la ventilación mecánica: invasiva ">
+								</option>
+								<option
+									value="[3302] manejo de la ventilación mecánica: no invasiva ">
+								</option>
+								<option
+									value="[3304] manejo de la ventilación mecánica: prevención de la neumonía ">
+								</option>
+								<option value="[3310] destete de la ventilación mecánica ">
+								</option>
+								<option value="[3316] irrigación nasal "></option>
+								<option value="[3320] oxigenoterapia "></option>
+								<option value="[3350] monitorización respiratoria "></option>
+								<option value="[3390] ayuda a la ventilación "></option>
+								<option value="[3420] cuidados del paciente amputado ">
+								</option>
+								<option value="[3440] cuidados del sitio de incisión ">
+								</option>
+								<option value="[3460] terapia con sanguijuelas "></option>
+								<option
+									value="[3480] monitorización de las extremidades inferiores ">
+								</option>
+								<option value="[3500] manejo de presiones "></option>
+								<option value="[3520] cuidados de las úlceras por presión ">
+								</option>
+								<option value="[3540] prevención de úlceras por presión ">
+								</option>
+								<option value="[3550] manejo del prurito "></option>
+								<option value="[3582] cuidados de la piel: zona donante ">
+								</option>
+								<option value="[3583] cuidados de la piel: zona del injerto ">
+								</option>
+								<option value="[3584] cuidados de la piel: tratamiento tópico ">
+								</option>
+								<option value="[3590] vigilancia de la piel "></option>
+								<option value="[3620] sutura "></option>
+								<option value="[3660] cuidados de las heridas "></option>
+								<option value="[3661] cuidados de las heridas: quemaduras ">
+								</option>
+								<option value="[3662] cuidados de las heridas: drenaje cerrado ">
+								</option>
+								<option
+									value="[3664] cuidado de las heridas: ausencia de cicatrización ">
+								</option>
+								<option value="[3680] irrigación de heridas "></option>
+								<option value="[3740] tratamiento de la fiebre "></option>
+								<option value="[3786] tratamiento de la hipertermia "></option>
+								<option value="[3790] terapia de inducción de hipotermia ">
+								</option>
+								<option value="[3800] tratamiento de la hipotermia "></option>
+								<option value="[3840] precauciones en la hipertermia maligna ">
+								</option>
+								<option value="[3900] regulación de la temperatura "></option>
+								<option
+									value="[3902] regulación de la temperatura: perioperatoria ">
+								</option>
+								<option value="[4010] prevención de hemorragias "></option>
+								<option value="[4020] disminución de la hemorragia "></option>
+								<option
+									value="[4021] disminución de la hemorragia: útero anteparto ">
+								</option>
+								<option value="[4022] disminución de la hemorragia: digestiva ">
+								</option>
+								<option value="[4024] disminución de la hemorragia: epistaxis ">
+								</option>
+								<option
+									value="[4026] disminución de la hemorragia: útero posparto ">
+								</option>
+								<option value="[4028] disminución de la hemorragia: heridas ">
+								</option>
+								<option value="[4030] administración de hemoderivados ">
+								</option>
+								<option value="[4035] muestra de sangre capilar "></option>
+								<option value="[4040] cuidados cardíacos "></option>
+								<option value="[4044] cuidados cardíacos: agudos "></option>
+								<option value="[4046] cuidados cardíacos: rehabilitación ">
+								</option>
+								<option value="[4050] manejo del riesgo cardíaco "></option>
+								<option
+									value="[4054] manejo de un dispositivo de acceso venoso central ">
+								</option>
+								<option
+									value="[4062] cuidados circulatorios: insuficiencia arterial ">
+								</option>
+								<option
+									value="[4064] cuidados circulatorios: dispositivo de ayuda mecánico ">
+								</option>
+								<option
+									value="[4066] cuidados circulatorios: insuficiencia venosa ">
+								</option>
+								<option value="[4070] precauciones circulatorias "></option>
+								<option value="[4090] manejo de la arritmia "></option>
+								<option value="[4091] manejo del marcapasos: permanente ">
+								</option>
+								<option value="[4092] manejo del marcapasos: temporal ">
+								</option>
+								<option value="[4095] manejo del desfibrilador: externo ">
+								</option>
+								<option value="[4096] manejo del desfibrilador: interno ">
+								</option>
+								<option value="[4104] cuidados del embolismo: periférico ">
+								</option>
+								<option value="[4106] cuidados del embolismo: pulmonar ">
+								</option>
+								<option value="[4110] precauciones en el embolismo "></option>
+								<option value="[4120] manejo de líquidos "></option>
+								<option value="[4130] monitorización de líquidos"></option>
+								<option value="[4140] reposición de líquidos "></option>
+								<option value="[4150] regulación hemodinámica "></option>
+								<option value="[4170] manejo de la hipervolemia "></option>
+								<option value="[4180] manejo de la hipovolemia "></option>
+								<option value="[4190] punción intravenosa (i.v.) "></option>
+								<option value="[4200] terapia intravenosa (i.v) "></option>
+								<option value="[4210] monitorización hemodinámica invasiva ">
+								</option>
+								<option
+									value="[4220] cuidados del catéter central de inserción periférica (picc) ">
+								</option>
+								<option value="[4232] flebotomía: muestra de sangre arterial ">
+								</option>
+								<option
+									value="[4234] flebotomía: obtención de una unidad de sangre ">
+								</option>
+								<option value="[4235] flebotomía: vía canalizada "></option>
+								<option value="[4238] flebotomía: muestra de sangre venosa ">
+								</option>
+								<option value="[4240] mantenimiento del acceso para diálisis ">
+								</option>
+								<option value="[4250] manejo del shock "></option>
+								<option value="[4254] manejo del shock: cardíaco "></option>
+								<option value="[4256] manejo del shock: vasogénico "></option>
+								<option value="[4258] manejo del shock: volumen "></option>
+								<option value="[4260] prevención del shock "></option>
+								<option value="[4266] infusión de células madre "></option>
+								<option value="[4270] manejo de la terapia trombolítica ">
+								</option>
+								<option value="[4310] terapia de actividad "></option>
+								<option value="[4320] terapia asistida con animales "></option>
+								<option value="[4330] arteterapia "></option>
+								<option value="[4340] entrenamiento de la asertividad ">
+								</option>
+								<option value="[4350] manejo de la conducta "></option>
+								<option
+									value="[4352] manejo de la conducta: hiperactividad/falta de atención ">
+								</option>
+								<option value="[4354] manejo de la conducta: autolesión ">
+								</option>
+								<option value="[4356] manejo de la conducta: sexual "></option>
+								<option value="[4360] modificación de la conducta "></option>
+								<option
+									value="[4362] modificación de la conducta: habilidades sociales ">
+								</option>
+								<option value="[4364] elogio "></option>
+								<option
+									value="[4370] entrenamiento para controlar los impulsos ">
+								</option>
+								<option value="[4380] establecer límites "></option>
+								<option value="[4390] terapia con el entorno "></option>
+								<option value="[4400] musicoterapia "></option>
+								<option value="[4410] establecimiento de objetivos comunes ">
+								</option>
+								<option value="[4420] acuerdo con el paciente "></option>
+								<option value="[4430] terapia con juegos "></option>
+								<option value="[4470] ayuda en la modificación de sí mismo ">
+								</option>
+								<option value="[4480] facilitar la autorresponsabilidad ">
+								</option>
+								<option value="[4490] ayuda para dejar de fumar "></option>
+								<option
+									value="[4500] prevención del consumo de sustancias nocivas ">
+								</option>
+								<option
+									value="[4510] tratamiento por el consumo de sustancias nocivas ">
+								</option>
+								<option
+									value="[4512] tratamiento por el consumo de sustancias nocivas: retirada del alcohol ">
+								</option>
+								<option
+									value="[4514] tratamiento por el consumo de sustancias nocivas: retirada de las drogas ">
+								</option>
+								<option
+									value="[4516] tratamiento por el consumo de sustancias nocivas: sobredosis ">
+								</option>
+								<option value="[4640] ayuda para el control del enfado ">
+								</option>
+								<option value="[4680] biblioterapia "></option>
+								<option value="[4700] reestructuración cognitiva "></option>
+								<option value="[4720] estimulación cognitiva "></option>
+								<option value="[4740] llevar un diario "></option>
+								<option value="[4760] entrenamiento de la memoria"></option>
+								<option value="[4820] orientación de la realidad "></option>
+								<option value="[4860] terapia de reminiscencia "></option>
+								<option value="[4920] escucha activa "></option>
+								<option
+									value="[4974] mejorar la comunicación: déficit auditivo ">
+								</option>
+								<option
+									value="[4976] mejorar la comunicación: déficit del habla ">
+								</option>
+								<option value="[4978] mejorar la comunicación: déficit visual ">
+								</option>
+								<option value="[5000] elaboración de relaciones complejas">
+								</option>
+								<option value="[5020] mediación de conflictos"></option>
+								<option value="[5100] potenciación de la socialización ">
+								</option>
+								<option value="[5210] orientación anticipatoria "></option>
+								<option value="[5220] mejora de la imagen corporal "></option>
+								<option value="[5230] mejorar el afrontamiento "></option>
+								<option value="[5240] asesoramiento "></option>
+								<option value="[5242] consejo genético "></option>
+								<option value="[5244] asesoramiento en la lactancia "></option>
+								<option value="[5246] asesoramiento nutricional "></option>
+								<option value="[5247] asesoramiento antes de la concepción ">
+								</option>
+								<option value="[5248] asesoramiento sexual "></option>
+								<option value="[5250] apoyo en la toma de decisiones ">
+								</option>
+								<option value="[5260] cuidados en la agonía "></option>
+								<option value="[5270] apoyo emocional "></option>
+								<option value="[5280] facilitar el perdón "></option>
+								<option value="[5290] facilitar el duelo "></option>
+								<option value="[5294] facilitar el duelo: muerte perinatal ">
+								</option>
+								<option
+									value="[5300] facilitar la expresión del sentimiento de culpa ">
+								</option>
+								<option value="[5310] dar esperanza "></option>
+								<option value="[5320] humor "></option>
+								<option
+									value="[5326] potenciación de las aptitudes para la vida diaria ">
+								</option>
+								<option value="[5328] visitas domiciliarias de apoyo ">
+								</option>
+								<option value="[5330] control del estado de ánimo "></option>
+								<option value="[5340] presencia "></option>
+								<option value="[5350] disminución del estrés por traslado ">
+								</option>
+								<option value="[5360] terapia de entretenimiento "></option>
+								<option value="[5370] potenciación de roles "></option>
+								<option value="[5380] potenciación de la seguridad "></option>
+								<option value="[5390] potenciación de la autoconciencia ">
+								</option>
+								<option value="[5395] mejora de la autoconfianza "></option>
+								<option value="[5400] potenciación de la autoestima "></option>
+								<option value="[5410] terapia del trauma: niño "></option>
+								<option value="[5420] apoyo espiritual "></option>
+								<option value="[5422] prevención de la adicción religiosa ">
+								</option>
+								<option value="[5424] facilitar la práctica religiosa ">
+								</option>
+								<option value="[5426] facilitar el crecimiento espiritual ">
+								</option>
+								<option value="[5430] grupo de apoyo "></option>
+								<option value="[5440] aumentar los sistemas de apoyo ">
+								</option>
+								<option value="[5450] terapia de grupo "></option>
+								<option value="[5460] contacto "></option>
+								<option value="[5465] tacto terapéutico "></option>
+								<option value="[5470] declarar la verdad al paciente ">
+								</option>
+								<option value="[5480] clarificación de valores "></option>
+								<option value="[5510] educación para la salud "></option>
+								<option
+									value="[5515] mejorar el acceso a la información sanitaria ">
+								</option>
+								<option value="[5520] facilitar el aprendizaje "></option>
+								<option
+									value="[5540] potenciación de la disposición de aprendizaje ">
+								</option>
+								<option value="[5562] educacion parental: adolescentes ">
+								</option>
+								<option
+									value="[5566] educación parental: crianza familiar de los niños ">
+								</option>
+								<option value="[5568] educación parental: lactante "></option>
+								<option value="[5580] información preparatoria: sensorial ">
+								</option>
+								<option value="[5602] enseñanza: proceso de enfermedad ">
+								</option>
+								<option value="[5603] enseñanza: cuidados de los pies ">
+								</option>
+								<option value="[5604] enseñanza: grupo "></option>
+								<option value="[5606] enseñanza: individual"></option>
+								<option value="[5610] enseñanza: prequirúrgica "></option>
+								<option value="[5612] enseñanza: ejercicio prescrito ">
+								</option>
+								<option value="[5614] enseñanza: dieta prescrita "></option>
+								<option value="[5616] enseñanza: medicamentos prescritos ">
+								</option>
+								<option value="[5618] enseñanza: procedimiento/tratamiento ">
+								</option>
+								<option value="[5620] enseñanza: habilidad psicomotora ">
+								</option>
+								<option value="[5622] enseñanza: relaciones sexuales seguras">
+								</option>
+								<option value="[5624] enseñanza: sexualidad "></option>
+								<option
+									value="[5634] enseñanza: entrenamiento del control de esfínteres ">
+								</option>
+								<option
+									value="[5640] enseñanza: nutrición del lactante (0-3 meses) ">
+								</option>
+								<option
+									value="[5641] enseñanza: nutrición del lactante (4-6 meses) ">
+								</option>
+								<option
+									value="[5642] enseñanza: nutrición del lactante (7-9 meses) ">
+								</option>
+								<option
+									value="[5643] enseñanza: nutrición del lactante (10-12 meses) ">
+								</option>
+								<option
+									value="[5645] enseñanza: seguridad del lactante (0-3 meses) ">
+								</option>
+								<option
+									value="[5646] enseñanza: seguridad del lactante (4-6 meses) ">
+								</option>
+								<option
+									value="[5647] enseñanza: seguridad del lactante (7-9 meses) ">
+								</option>
+								<option
+									value="[5648] enseñanza: seguridad del lactante (10-12 meses) ">
+								</option>
+								<option
+									value="[5655] enseñanza: estimulación del lactante (0-4 meses) ">
+								</option>
+								<option
+									value="[5656] enseñanza: estimulación del lactante (5-8 meses)">
+								</option>
+								<option
+									value="[5657] enseñanza: estimulación del lactante (9-12 meses) ">
+								</option>
+								<option
+									value="[5660] enseñanza: nutrición del niño (13-18 meses) ">
+								</option>
+								<option
+									value="[5661] enseñanza: nutrición del niño (19-24 meses) ">
+								</option>
+								<option
+									value="[5662] enseñanza: nutrición del niño (25-36 meses) ">
+								</option>
+								<option
+									value="[5665] enseñanza: seguridad del niño (13-18 meses) ">
+								</option>
+								<option
+									value="[5666] enseñanza: seguridad del niño (19-24 meses) ">
+								</option>
+								<option
+									value="[5667] enseñanza: seguridad del niño (25-36 meses) ">
+								</option>
+								<option value="[5820] disminución de la ansiedad "></option>
+								<option value="[5840] entrenamiento autógeno "></option>
+								<option value="[5860] biorretroalimentación "></option>
+								<option value="[5880] técnica de relajación "></option>
+								<option value="[5900] distracción "></option>
+								<option value="[5920] hipnosis "></option>
+								<option value="[5922] facilitar la autohipnosis "></option>
+								<option value="[5960] facilitar la meditación "></option>
+								<option value="[6000] imaginación simple dirigida "></option>
+								<option value="[6040] terapia de relajación "></option>
+								<option value="[6140] manejo de la parada cardiorespiratoria ">
+								</option>
+								<option value="[6160] intervención en caso de crisis ">
+								</option>
+								<option value="[6200] cuidados en la emergencia "></option>
+								<option value="[6240] primeros auxilios "></option>
+								<option value="[6260] obtención de órganos "></option>
+								<option value="[6300] tratamiento del trauma de la violación ">
+								</option>
+								<option value="[6320] reanimación "></option>
+								<option value="[6340] prevención del suicidio "></option>
+								<option value="[6362] triaje: catástrofe "></option>
+								<option value="[6364] triaje: centro de urgencias "></option>
+								<option value="[6366] triaje: teléfono"></option>
+								<option value="[6400] apoyo en la protección contra abusos ">
+								</option>
+								<option
+									value="[6402] apoyo en la protección contra abusos: niños ">
+								</option>
+								<option
+									value="[6403] apoyo en la protección contra abusos: pareja ">
+								</option>
+								<option
+									value="[6404] apoyo en la protección contra abusos: ancianos ">
+								</option>
+								<option
+									value="[6408] apoyo en la protección contra abusos: religioso ">
+								</option>
+								<option value="[6410] manejo de la alergia "></option>
+								<option value="[6412] manejo de la anafilaxia "></option>
+								<option value="[6420] restricción de zonas de movimiento ">
+								</option>
+								<option value="[6430] contención farmacológica "></option>
+								<option value="[6440] manejo del delirio "></option>
+								<option value="[6450] manejo de las ideas delirantes ">
+								</option>
+								<option value="[6460] manejo de la demencia "></option>
+								<option value="[6462] manejo de la demencia: baño "></option>
+								<option
+									value="[6466] manejo de la demencia: deambulación errática ">
+								</option>
+								<option value="[6470] precauciones contra fugas "></option>
+								<option value="[6480] manejo ambiental "></option>
+								<option value="[6482] manejo ambiental: confort "></option>
+								<option value="[6484] manejo ambiental: comunidad "></option>
+								<option value="[6485] manejo ambiental: preparación del hogar ">
+								</option>
+								<option value="[6486] manejo ambiental: seguridad "></option>
+								<option
+									value="[6487] manejo ambiental: prevención de la violencia ">
+								</option>
+								<option
+									value="[6489] manejo ambiental: seguridad del trabajador ">
+								</option>
+								<option value="[6490] prevención de caídas "></option>
+								<option value="[6500] precauciones contra incendios provocados ">
+								</option>
+								<option value="[6510] manejo de las alucinaciones "></option>
+								<option value="[6520] análisis de la situación sanitaria ">
+								</option>
+								<option value="[6522] exploración mamaria "></option>
+								<option value="[6530] manejo de la inmunización/vacunación ">
+								</option>
+								<option value="[6540] control de infecciones "></option>
+								<option value="[6545] control de infecciones: intraoperatorio ">
+								</option>
+								<option value="[6550] protección contra las infecciones ">
+								</option>
+								<option value="[6560] precauciones con el láser "></option>
+								<option value="[6570] precauciones en la alergia al látex ">
+								</option>
+								<option value="[6574] identificación del paciente "></option>
+								<option value="[6580] sujeción física "></option>
+								<option
+									value="[6590] precauciones con los torniquetes neumáticos ">
+								</option>
+								<option value="[6600] manejo de la radioterapia "></option>
+								<option value="[6610] identificación de riesgos "></option>
+								<option
+									value="[6612] identificación de riesgos: familia con recién nacido ">
+								</option>
+								<option value="[6614] identificacion de riesgos: genéticos ">
+								</option>
+								<option value="[6630] aislamiento "></option>
+								<option
+									value="[6648] prevención de lesiones deportivas: jóvenes ">
+								</option>
+								<option value="[6650] vigilancia "></option>
+								<option value="[6652] vigilancia: comunidad "></option>
+								<option value="[6656] vigilancia: al final del embarazo ">
+								</option>
+								<option
+									value="[6658] vigilancia: electrónica por control remoto ">
+								</option>
+								<option value="[6670] terapia de validación "></option>
+								<option value="[6680] monitorización de los signos vitales ">
+								</option>
+								<option value="[6700] amnioinfusión "></option>
+								<option value="[6710] fomentar el apego "></option>
+								<option value="[6720] parto "></option>
+								<option value="[6750] asistencia al parto por cesárea ">
+								</option>
+								<option value="[6760] preparación al parto "></option>
+								<option
+									value="[6771] monitorización fetal electrónica: antes del parto ">
+								</option>
+								<option
+									value="[6772] monitorización fetal electrónica: durante el parto ">
+								</option>
+								<option value="[6784] planificación familiar: anticoncepción ">
+								</option>
+								<option value="[6786] planificación familiar: infertilidad ">
+								</option>
+								<option
+									value="[6788] planificacion familiar: embarazo no deseado ">
+								</option>
+								<option value="[6800] cuidados del embarazo de alto riesgo ">
+								</option>
+								<option value="[6820] cuidados del lactante "></option>
+								<option value="[6824] cuidados del lactante: recién nacido ">
+								</option>
+								<option value="[6826] cuidados del lactante: prematuro ">
+								</option>
+								<option value="[6830] cuidados intraparto "></option>
+								<option
+									value="[6834] cuidados intraparto: parto de alto riesgo ">
+								</option>
+								<option value="[6840] cuidados de canguro (del niño prematuro) ">
+								</option>
+								<option value="[6850] inducción al parto "></option>
+								<option value="[6860] supresión de las contracciones de parto ">
+								</option>
+								<option value="[6870] supresión de la lactancia "></option>
+								<option value="[6900] succión no nutritiva "></option>
+								<option value="[6924] fototerapia: neonato "></option>
+								<option value="[6926] fototerapia: regulación del biorritmo ">
+								</option>
+								<option value="[6930] cuidados posparto "></option>
+								<option value="[6950] cuidados por interrupción del embarazo ">
+								</option>
+								<option value="[6960] cuidados prenatales "></option>
+								<option value="[6972] reanimación: feto "></option>
+								<option value="[6974] reanimación: neonato "></option>
+								<option value="[6982] ecografía: obstétrica "></option>
+								<option value="[7040] apoyo al cuidador principal "></option>
+								<option value="[7100] estimulación de la integridad familiar ">
+								</option>
+								<option
+									value="[7104] estimulación de la integridad familiar: familia con niño (recién nacido) ">
+								</option>
+								<option value="[7110] fomentar la implicación familiar ">
+								</option>
+								<option value="[7120] movilización familiar "></option>
+								<option value="[7130] mantenimiento de procesos familiares ">
+								</option>
+								<option value="[7140] apoyo a la familia "></option>
+								<option value="[7150] terapia familiar "></option>
+								<option value="[7160] preservación de la fertilidad "></option>
+								<option value="[7170] facilitar la presencia de la familia ">
+								</option>
+								<option value="[7180] asistencia en el mantenimiento del hogar ">
+								</option>
+								<option value="[7200] fomentar la normalización familiar ">
+								</option>
+								<option value="[7260] cuidados por relevo "></option>
+								<option value="[7280] apoyo de hermanos "></option>
+								<option value="[7310] cuidados de enfermería al ingreso ">
+								</option>
+								<option value="[7320] gestión de casos "></option>
+								<option value="[7330] intermediación cultural "></option>
+								<option value="[7370] planificación para el alta "></option>
+								<option value="[7380] asistencia para los recursos financieros ">
+								</option>
+								<option value="[7400] orientación en el sistema sanitario ">
+								</option>
+								<option value="[7410] autorización de seguros "></option>
+								<option value="[7440] facilitar permisos "></option>
+								<option value="[7460] protección de los derechos del paciente ">
+								</option>
+								<option value="[7500] apoyo para la consecución del sustento ">
+								</option>
+								<option value="[7560] facilitar las visitas "></option>
+								<option
+									value="[7610] análisis de laboratorio a la cabecera del paciente ">
+								</option>
+								<option value="[7620] comprobación de sustancias controladas ">
+								</option>
+								<option value="[7630] contención de los costes "></option>
+								<option value="[7640] desarrollo de vías clínicas "></option>
+								<option value="[7650] delegación "></option>
+								<option value="[7660] revisión del carro de emergencias ">
+								</option>
+								<option value="[7680] ayuda en la exploración "></option>
+								<option value="[7690] interpretación de datos de laboratorio ">
+								</option>
+								<option value="[7700] evaluación de compañeros "></option>
+								<option value="[7710] colaboración con el médico "></option>
+								<option value="[7722] preceptor: empleado "></option>
+								<option value="[7726] preceptor: estudiante "></option>
+								<option value="[7760] evaluación de productos "></option>
+								<option value="[7800] control de calidad "></option>
+								<option value="[7820] manejo de muestras "></option>
+								<option value="[7830] supervisión del personal "></option>
+								<option value="[7840] manejo de los suministros "></option>
+								<option value="[7850] desarrollo del personal "></option>
+								<option value="[7880] manejo de la tecnología "></option>
+								<option value="[7886] manejo de la tecnología reproductiva ">
+								</option>
+								<option value="[7890] transporte: entre instalaciones ">
+								</option>
+								<option value="[7892] transporte: dentro de la instalación ">
+								</option>
+								<option value="[7910] consulta "></option>
+								<option value="[7920] documentación "></option>
+								<option value="[7930] declaración/testimonio "></option>
+								<option value="[7940] recogida de datos forenses "></option>
+								<option
+									value="[7960] intercambio de información de cuidados de salud ">
+								</option>
+								<option value="[7970] seguimiento de la política sanitaria ">
+								</option>
+								<option value="[7980] informe de incidencias "></option>
+								<option value="[8020] reunión multidisciplinar sobre cuidados ">
+								</option>
+								<option value="[8060] transcripción de órdenes "></option>
+								<option value="[8080] prescripción: pruebas diagnósticas ">
+								</option>
+								<option
+									value="[8086] prescripción: tratamiento no farmacológico ">
+								</option>
+								<option value="[8100] derivación "></option>
+								<option value="[8120] recogida de datos para la investigación ">
+								</option>
+								<option value="[8140] informe de turnos "></option>
+								<option value="[8180] consulta por teléfono "></option>
+								<option value="[8190] seguimiento teléfonico "></option>
+								<option value="[8240] alimentación con taza: recién nacido ">
+								</option>
+								<option value="[8272] fomentar el desarrollo: adolescentes ">
+								</option>
+								<option value="[8274] fomentar el desarrollo: niños "></option>
+								<option value="[8278] fomentar el desarrollo: lactantes ">
+								</option>
+								<option value="[8300] fomentar el rol parental "></option>
+								<option value="[8340] fomentar la resiliencia "></option>
+								<option value="[8500] fomentar la salud de la comunidad ">
+								</option>
+								<option value="[8550] manejo de los recursos económicos ">
+								</option>
+								<option value="[8700] desarrollo de un programa "></option>
+								<option value="[8750] marketing social "></option>
+								<option value="[8810] preparación ante el bioterrorismo ">
+								</option>
+								<option value="[8820] control de enfermedades transmisibles ">
+								</option>
+								<option
+									value="[8840] preparación para un desastre en la comunidad ">
+								</option>
+								<option value="[8850] protección de riesgos ambientales ">
+								</option>
+								<option value="[9050] fomentar la seguridad en el vehículo ">
+								</option>
+							</datalist>
+						</div>
+						<div class="col-md-6">
+							<label>Evaluacion:</label> <input name="busquedamodelos"
+								list="Evaluacion" class="form-control"
+								aria-label="Default select example"
+								placeholder="Digita o elige una opcion" th:field="*{evaluacion}">
+						</div>
+						<div class="input-group-text col-md-12">
+							<label>Abierto a acitividades: </label>
+							<textarea name="prueba" id="prueba" rows="5" required class="form-control" aria-label="With textarea" th:field="*{abiertoActividades}" >
+							</textarea>
+							<div class="text-right"><span class="valid-text pt-3" id="pruebaCount">255 Caracteres restantes</span></div>
+							<script type="text/javascript">
+							$(document).ready(function() {
+							    var limit = 255;
+							    $("#prueba").keyup(function(event) {
+							        var value = limit - $(this).val().length;
+
+							        if (value <= 0) {
+							            $('#prueba').removeClass('is-valid');
+							            $('#prueba').addClass('is-invalid');
+							            $('#pruebaCount').html(value);
+							            $('#pruebaCount').removeClass('valid-text');
+							            $('#pruebaCount').addClass('invalid-text');
+							        } else if (value > 0) {
+							            $('#prueba').removeClass('is-invalid');
+							            $('#prueba').addClass('is-valid');
+							            $('#pruebaCount').html(value);
+							            $('#pruebaCount').removeClass('invalid-text');
+							            $('#pruebaCount').addClass('valid-text');
+							        }
+							    });
+							});
+							</script>
+							
+						</div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col text-center">
+						<input type="submit" class="btn btn-outline-success"
+							value="Guardar Valoracion"></input>
+					</div>
+				</div>
+			</form>
+		</div>
+
+	</div>
+	
+	<script type="text/javascript">
+		function addDiagnostico(){
+			$('#Diag .clonar').clone().find('input').val('').end().appendTo('#contenedor');
+		}
+		function addResultado(){
+			$('#Resultado .clonarResultado').clone().find('input').val('').end().appendTo('#contenedor1');
+		}
+		function addInter(){
+			$('#Inter .clonarInter').clone().find('input').val('').end().appendTo('#contenedor2');
+		}
+		
+	</script>
+	<script src="./js/bootstrap.bundle.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>

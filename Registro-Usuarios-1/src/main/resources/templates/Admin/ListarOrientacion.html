@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<title>Cassa Udec</title>
+
+<!--JQUERY-->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	crossorigin="anonymous"></script>
+
+<!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+
+<!-- Los iconos tipo Solid de Fontawesome-->
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+<script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+<link
+	href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css"
+	rel="stylesheet">
+
+<!-- Nuestro css-->
+<link rel="stylesheet" type="text/css"
+	href="static/css/Form-Usuario.css" th:href="@{/css/Form-Usuario.css}">
+
+<!-- DATA TABLE -->
+<script
+	src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script
+	src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+</head>
+<body>
+	<div class="contenedor">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<img src="static/img/Logoudec.png" th:src="@{//img/Logoudec.png}"
+				width="150" alt="">
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			</div>
+			<div class="collapse navbar-collapse" id="navbarText">
+				<ul class="nav navbar-nav">
+					<li sec:authorize="isAuthenticated()"><a class="navbar-brand">CASSA
+							UDEC</a></li>
+				</ul>
+			</div>
+			<ul class="nav nav-tabs justify-content-end">
+				<li class="nav-item"><a class="nav-link" href="#"
+					th:href="@{/logout}"><span
+						th:text="${#authentication.getPrincipal().getUsername()}"></span>
+						- <span>Cerrar Sesion </span><span class="float-right"><i
+							class="fas fa-sign-out-alt"></i></span> </a></li>
+			</ul>
+		</nav>
+	</div>
+	<div class="container-fluid">
+		<div class="row flex-nowrap">
+			<div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light">
+				<div
+					class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+					<ul
+						class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+						id="menu">
+						<li class="nav-item"><a th:href="@{/InicioAdmin}"
+							class="d-block text-success p-3 border-0 "> <i
+								class="icon ion-md-home mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Inicio</span>
+						</a></li>
+						<li><a href="#" th:href="@{/RPacientes}" class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-person mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Registrar Pacientes</span>
+						</a></li>
+						<li><a href="#" th:href="@{/ListarPacientes}" class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-list mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Lista de Pacientes</span>
+						</a></li>
+						<li><a href="#" th:href="@{/Valoracion}" class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-medkit mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Valoraciones</span>
+						</a></li>
+						<li><a href="#" th:href="@{/Admin/Cartillas}" class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-medkit mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Crear Cartillas</span>
+						</a></li>
+						<li><a href="#" class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-copy mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Reportes</span>
+						</a></li>
+						<li><a href="#" class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-chatboxes mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Chat</span>
+						</a></li>
+						<li><a href="#" th:href="@{/Admin/Eventos}" class="d-block text-success p-3 border-0">
+								<i class="icon ion-md-calendar mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Eventos</span>
+						</a></li>
+						<li class="nav-item"><a href="#" th:href="@{/FormUsuario}"
+							class="d-block text-success p-3 border-0 "> <i
+								class="icon ion-md-home mr-2"></i> <span
+								class="ms-1 d-none d-sm-inline">Lista de usuarios</span>
+						</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="container text-center">
+				<h1>Lista de Estado de salud</h1>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Id</th>
+							<th scope="col">Nombre</th>
+							<th scope="col">Apellidos</th>
+							<th scope="col">Cedula</th>
+							<th scope="col">Nivel de educacion</th>
+							<th scope="col">Medidas Alternativas</th>
+							<th scope="col">Religion</th>
+							<th scope="col">Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="estadoSalud : ${valoraciones}">
+							<td th:text="${estadoSalud.id}"></td>
+							<td th:text="${estadoSalud.Pacientes.nombre}"></td>
+							<td th:text="${estadoSalud.Pacientes.apellidos}"></td>
+							<td th:text="${estadoSalud.Pacientes.cedula}"></td>
+							<td th:text="${estadoSalud.nivelEducacion}"></td>
+							<td th:text="${estadoSalud.medidasAlternativas}"></td>
+							<td th:text="${estadoSalud.religion}"></td>
+							
+							<td>
+							<a class="btn btn-warning">Editar</a>
+							<a class="btn btn-danger">Eliminar</a>
+							</td>
+						</tr>	
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+	</div>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="js/funciones2.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<title>Cassa Udec</title>
+	
+	<!--JQUERY-->
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+		crossorigin="anonymous"></script>
+	
+	<!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	
+	<!-- Los iconos tipo Solid de Fontawesome-->
+	<link rel="stylesheet"
+		href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css">
+	<script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+	
+	<!-- Nuestro css-->
+	<link rel="stylesheet" type="text/css"
+		href="static/css/Form-Usuario.css" th:href="@{/css/Form-Usuario.css}">
+</head>
+<body>
+	<div class="container">
+		<div class="mx-auto col-sm-8 main-section" id="myTab" role="tablist">
+			<div class="card">
+				<div class="card-header">
+					<h4>Registrar nuevo usuario</h4>
+				</div>
+				<div class="card-body">
+					<div th:include="Usuario-Form/Form-Usuario.html" th:remove="tag"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

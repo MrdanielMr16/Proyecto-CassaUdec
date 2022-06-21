@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Sopa de letras</title>
+
+    <link rel="stylesheet" type="text/css" href="Sopac/style.css" media="all">
+    <link rel="stylesheet" href="Sopac/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="Sopac/jquery-ui.css">
+    <link href="Sopac/jquery.tagit.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="Sopaj/jquery.min.js"></script>
+    <script type="text/javascript" src="Sopaj/wordfind.js"></script>
+    <script type="text/javascript" src="Sopaj/wordfindgame.js"></script>
+    <script type="text/javascript" src="Sopaj/bootstrap.min.js"></script>
+    <script type="text/javascript" src="Sopaj/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="Sopaj/tag-it.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <script type="text/javascript">
+                var ListaPalabras;
+                $(document).ready(function() {
+                    ListaPalabras = $("#listaPalabras").tagit({});
+                    Crear();
+                });
+            </script>
+            <div hidden class="row text-center">
+                <br />
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <center><h1>Para iniciar el juego dale en <strong>"Jugar"</strong></h1></center>
+                    </div>
+                    <div class="panel-body">
+                        <ul id="listaPalabras">
+                            <li>AGONIZANTE</li>
+                            <li>ARTRITIS</li>
+                            <li>CALOR</li>
+                            <li>CALCICO</li>
+                            <li>DESGASTE</li>
+                            <li>DETERIORO</li>
+                            <li>DOLOR</li>
+                            <li>HINCHAZON</li>
+                            <li>INFLACION</li>
+                            <li>INFLAMACION</li>
+                            <li>PIROFOSFATO</li>
+                            <li>REUMATOIDE</li>
+                            <li>RIGIDEZ</li>
+                            <li>TARDÍA</li>
+                            <li>TRATAMIENTO</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row text-center">
+                <div>
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <center><h2>Sopa de letras sobre la diabetes</h2></center>
+                            </div>
+                            <div class="panel-body row">
+                                <div class="">
+                                    <center><button onclick="Crear();" class="btn btn-success btn-lg">Volver a jugar</button>
+                                    <button id='solve' class="btn btn-danger btn-lg"> Resolver</button>
+                                </center>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div id='Palabras'></div>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div id='juego'></div>
+                                        <p>Busca las palabras que aparecen en la parte a la izquierda de la sopa de letras.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <center>
+            <a class="btn btn-danger btn-lg" th:href="@{/Actividades}" href="Actividades.html">Volver</a></center>
+            <script>
+                var palabras = [];
+                var juego;
+
+                function Crear() {
+                    datos = ListaPalabras[0].textContent.trim().split("×");
+                    for (i = 0; i < (datos.length) - 1; i++) {
+                        palabras.push(datos[i]);
+                    }
+
+                    $('#Juegos').show();
+                    juego = wordfindgame.create(datos, '#juego', '#Palabras');
+                    var puzzle = wordfind.newPuzzle(datos, {
+                        height: 18,
+                        width: 18,
+                        fillBlanks: false
+                    });
+                }
+                $('#solve').click(function() {
+                    wordfindgame.solve(juego, palabras);
+                });
+            </script>
+</body>
+
+</html>
